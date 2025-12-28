@@ -1,96 +1,96 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Tarot Profundo</title>
+<meta charset="UTF-8">
+<title>Tarot Profundo</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: "Georgia", serif;
-      background: radial-gradient(circle, #2b1744, #12081f);
-      color: #f3e6c8;
-      text-align: center;
-      padding: 40px 20px;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: "Georgia", serif;
+  background: radial-gradient(circle, #2b1744, #12081f);
+  color: #f3e6c8;
+  text-align: center;
+  padding: 40px 20px;
+}
 
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
 
-    .subtitle {
-      font-size: 1.1em;
-      margin-bottom: 40px;
-    }
+.subtitle {
+  font-size: 1.1em;
+  margin-bottom: 40px;
+}
 
-    .cards {
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      flex-wrap: wrap;
-    }
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
 
-    .card {
-      width: 140px;
-      height: 220px;
-      border-radius: 16px;
-      background: linear-gradient(145deg, #3b235a, #1b0f2f);
-      border: 3px solid #e6c87a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
+.card {
+  width: 150px;
+  height: 240px;
+  border-radius: 18px;
+  border: 3px solid #e6c87a;
+  background: linear-gradient(145deg, #3b235a, #1b0f2f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
 
-    .card:hover {
-      transform: scale(1.05);
-    }
+.card:hover {
+  transform: scale(1.05);
+}
 
-    .card img {
-      width: 80%;
-    }
+.card img {
+  width: 85%;
+  border-radius: 10px;
+}
 
-    .button {
-      margin-top: 40px;
-      padding: 14px 36px;
-      background: linear-gradient(145deg, #f3d68a, #e4b95c);
-      color: #2b1a10;
-      border: none;
-      border-radius: 40px;
-      font-size: 1.1em;
-      cursor: pointer;
-    }
+button {
+  margin-top: 40px;
+  padding: 14px 36px;
+  background: linear-gradient(145deg, #f3d68a, #e4b95c);
+  border: none;
+  border-radius: 40px;
+  font-size: 1.1em;
+  cursor: pointer;
+}
 
-    .footer {
-      margin-top: 30px;
-      font-style: italic;
-      opacity: 0.85;
-    }
-  </style>
+.footer {
+  margin-top: 30px;
+  font-style: italic;
+  opacity: 0.85;
+}
+</style>
 </head>
 
 <body>
 
-  <h1>Tarot Profundo</h1>
-  <div class="subtitle">Elegí tres cartas y dejá que hablen.</div>
+<h1>Tarot Profundo</h1>
+<div class="subtitle">Elegí tres cartas y dejá que hablen.</div>
 
-  <div class="cards">
-    <div class="card">
-      <img src="https://i.imgur.com/9XnQ4xD.png" alt="Carta 1">
-    </div>
-    <div class="card">
-      <img src="https://i.imgur.com/9XnQ4xD.png" alt="Carta 2">
-    </div>
-    <div class="card">
-      <img src="https://i.imgur.com/9XnQ4xD.png" alt="Carta 3">
-    </div>
+<div class="cards">
+  <div class="card">
+    <img src="img/carta1.png" alt="Carta 1">
   </div>
+  <div class="card">
+    <img src="img/carta2.png" alt="Carta 2">
+  </div>
+  <div class="card">
+    <img src="img/carta3.png" alt="Carta 3">
+  </div>
+</div>
 
-  <button class="button" onclick="location.reload()">Nueva tirada</button>
+<button onclick="location.reload()">Nueva tirada</button>
 
-  <div class="footer">✨ Escuchá lo que tu alma ya sabe ✨</div>
+<div class="footer">✨ Escuchá lo que tu alma ya sabe ✨</div>
 
 </body>
-</html> 
+</html>
