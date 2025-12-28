@@ -9,17 +9,31 @@
   <h1>Tarot Profundo</h1>
   <p class="subtitle">Elegí una carta y dejá que el mensaje llegue.</p>
 
-  <div class="cards">
-    <div class="card" onclick="reveal(this, 0)"></div>
-    <div class="card" onclick="reveal(this, 1)"></div>
-    <div class="card" onclick="reveal(this, 2)"></div>
-  </div>
-
-  <p id="message"></p>
+<div class="cards">
+  <div class="card" onclick="revelar(this, 0)">🌙</div>
+  <div class="card" onclick="revelar(this, 1)">✨</div>
+  <div class="card" onclick="revelar(this, 2)">🔥</div>
+  <div class="card" onclick="revelar(this, 3)">💫</div>
 </div>
 
+<p id="mensaje"></p>
+
 <style>
-  body {
+  <script>
+const mensajes = [
+  "Hay algo que tu alma ya comprendió, aunque tu mente todavía duda.",
+  "Una energía nueva se acerca. No la fuerces, recibila.",
+  "Soltar no es perder: es abrir espacio a lo verdadero.",
+  "Tu intuición está despierta. Escuchala sin miedo."
+];
+
+function revelar(carta, index) {
+  carta.innerHTML = mensajes[index];
+  carta.style.background = "#f4e1b0";
+  carta.style.color = "#3a2b1c";
+  document.getElementById("mensaje").innerHTML = "✨ La carta habló.";
+}
+</script> body {
     margin: 0;
     font-family: Georgia, serif;
     background: radial-gradient(circle, #3b245f, #1e102f);
