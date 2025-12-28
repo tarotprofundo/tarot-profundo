@@ -1,70 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tarot Profundo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
       margin: 0;
-      font-family: 'Georgia', serif;
-      background: radial-gradient(circle at top, #3b1a5a, #16091f);
-      color: #f3e6c8;
-      text-align: center;
       min-height: 100vh;
+      background: radial-gradient(circle at top, #3b1b57, #1a0826);
+      font-family: 'Georgia', serif;
+      color: #f5e7c8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 16px;
     }
 
     h1 {
-      margin-top: 40px;
-      font-weight: 500;
+      font-weight: 400;
+      margin-bottom: 8px;
     }
 
     p {
-      opacity: 0.9;
-      margin-bottom: 30px;
+      margin-top: 0;
+      margin-bottom: 40px;
+      opacity: 0.85;
     }
 
     .cartas {
       display: flex;
-      justify-content: center;
       gap: 28px;
-      margin-top: 20px;
-    }
-.carta {
-  width: 180px;
-  height: 280px;
-  border-radius: 18px;
-  object-fit: cover;
-  box-shadow: 0 0 35px rgba(255, 215, 150, 0.5);
-  transition: transform 0.4s ease;
-  background-color: black;
-}
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
     }
 
-    .carta:hover {
-      transform: scale(1.05);
+    .carta {
+      width: 160px;
+      aspect-ratio: 2 / 3;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      background: black;
+    }
+
+    .carta img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     button {
       margin-top: 40px;
-      padding: 12px 28px;
+      padding: 14px 30px;
       border-radius: 30px;
       border: none;
+      background: #e6c36a;
+      color: #2b1b0f;
       font-size: 16px;
-      background: linear-gradient(135deg, #f5d58e, #d4af37);
-      color: #3b2a12;
       cursor: pointer;
     }
 
-    button:hover {
-      opacity: 0.9;
-    }
-
-    footer {
-      margin-top: 25px;
-      font-style: italic;
+    .footer {
+      margin-top: 20px;
       opacity: 0.8;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -74,36 +78,23 @@
   <h1>Tarot Profundo</h1>
   <p>Elegí tres cartas y dejá que hablen.</p>
 
-  <div class="cartas" id="cartas"></div>
+  <div class="cartas">
+    <div class="carta">
+      <img src="img/mago.png" alt="El Mago">
+    </div>
 
-  <button onclick="barajar()">Nueva tirada</button>
+    <div class="carta">
+      <img src="img/sacerdotisa.png" alt="La Sacerdotisa">
+    </div>
 
-  <footer>✨ Escuchá lo que tu alma ya sabe ✨</footer>
+    <div class="carta">
+      <img src="img/luna.png" alt="La Luna">
+    </div>
+  </div>
 
-  <script>
-    const cartas = [
-      "img/mago.png",
-      "img/sacerdotisa.png",
-      "img/luna.png"
-    ];
+  <button>Nueva tirada</button>
 
-    function barajar() {
-      const contenedor = document.getElementById("cartas");
-      contenedor.innerHTML = "";
-
-      const mezcladas = [...cartas].sort(() => Math.random() - 0.5);
-
-      mezcladas.forEach(src => {
-        const img = document.createElement("img");
-        img.src = src;
-        img.className = "carta";
-        contenedor.appendChild(img);
-      });
-    }
-
-    // Mostrar automáticamente al cargar
-    barajar();
-  </script>
+  <div class="footer">✨ Escuchá lo que tu alma ya sabe ✨</div>
 
 </body>
 </html>
