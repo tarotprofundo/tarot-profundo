@@ -94,4 +94,47 @@ Lecturas emocionales para comprender lo que sentís y acompañarte con claridad.
 
 <p>
 Este espacio fue creado para acompañarte desde la calma, la intuición y la conciencia emocional.<br>
-No es ad un 
+No es adivinación. Es una pausa para escucharte.
+</p>
+
+<p>🌙 Muy pronto vas a poder iniciar tu lectura.</p>
+
+<div class="cards">
+  <div class="card" onclick="revelar(this, 0)">✦</div>
+  <div class="card" onclick="revelar(this, 1)">✦</div>
+  <div class="card" onclick="revelar(this, 2)">✦</div>
+</div>
+
+<div id="mensaje"></div>
+
+<button onclick="reiniciar()">Nueva lectura</button>
+
+<script>
+  const mensajes = [
+    "Hay algo que tu alma ya entendió, aunque tu mente todavía duda.",
+    "Soltar no es perder: es abrir espacio para lo verdadero.",
+    "Confiá en lo que sentís. No estás imaginando nada."
+  ];
+
+  let reveladas = 0;
+
+  function revelar(carta, index) {
+    if (reveladas >= 3) return;
+
+    carta.classList.add("revealed");
+    carta.innerHTML = mensajes[index];
+    reveladas++;
+
+    if (reveladas === 3) {
+      document.getElementById("mensaje").innerHTML =
+        "✨ Esta es tu lectura completa. Tomate un momento para sentirla.";
+    }
+  }
+
+  function reiniciar() {
+    location.reload();
+  }
+</script>
+
+</body>
+</html>
