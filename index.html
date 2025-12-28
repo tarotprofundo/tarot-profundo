@@ -96,14 +96,25 @@ Cada una revela una capa distinta del mensaje.
 
 <button onclick="reiniciar()">Nueva tirada</button>
 
-<script>
-const cartas = [
-  { nombre: "El Mago", tipo: "Arcano Mayor", mensaje: "Tenés el poder de iniciar algo nuevo." },
-  { nombre: "La Sacerdotisa", tipo: "Arcano Mayor", mensaje: "Escuchá tu voz interna antes de actuar." },
-  { nombre: "El Ermitaño", tipo: "Arcano Mayor", mensaje: "El retiro trae claridad." },
-  { nombre: "As de Copas", tipo: "Arcano Menor", mensaje: "Una emoción nueva comienza a florecer." },
-  { nombre: "Tres de Espadas", tipo: "Arcano Menor", mensaje: "Hay una herida que necesita ser mirada." },
-  { nombre: "Reina de Bastos", tipo: "Arcano Menor", mensaje: "Confiá en tu fuego interno." }
+<script>const cartas = [
+  {
+    nombre: "El Mago",
+    tipo: "Arcano Mayor",
+    mensaje: "Tenés el poder de iniciar algo nuevo.",
+    imagen: "imagenes/mago.jpg"
+  },
+  {
+    nombre: "El Ermitaño",
+    tipo: "Arcano Mayor",
+    mensaje: "El retiro trae claridad.",
+    imagen: "imagenes/ermitaño.jpg"
+  },
+  {
+    nombre: "Tres de Espadas",
+    tipo: "Arcano Menor",
+    mensaje: "Hay una herida que necesita ser mirada.",
+    imagen: "imagenes/tres-espadas.jpg"
+  }
 ];
 
 let usadas = [];
