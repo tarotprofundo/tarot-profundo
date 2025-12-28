@@ -1,82 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Tarot Profundo</title>
+  <meta charset="UTF-8">
+  <title>Tarot Profundo</title>
 
-<style>
-body {
-  margin: 0;
-  font-family: Georgia, serif;
-  background: radial-gradient(circle at top, #3b215f, #12091f);
-  color: #f5e9c6;
-  text-align: center;
-  padding: 30px;
-}
+  <style>
+    body {
+      background: #1b1026;
+      color: white;
+      text-align: center;
+      font-family: serif;
+      margin: 0;
+      padding: 40px 0;
+    }
 
-h1 {
-  font-size: 42px;
-  margin-bottom: 10px;
-}
+    h1 {
+      margin-bottom: 10px;
+    }
 
-p {
-  font-size: 18px;
-  opacity: 0.9;
-}
+    .cartas {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
 
-.cartas {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  margin: 50px 0;
-  flex-wrap: wrap;
-}
-
-.carta {
-  width: 170px;
-  border-radius: 18px;
-  box-shadow: 0 0 25px rgba(255,215,150,0.35);
-  transition: transform 0.3s ease;
-}
-
-.carta:hover {
-  transform: scale(1.05);
-}
-
-button {
-  background: linear-gradient(145deg, #f7d58b, #e6b96a);
-  border: none;
-  padding: 14px 40px;
-  border-radius: 30px;
-  font-size: 18px;
-  cursor: pointer;
-  margin-top: 30px;
-}
-
-.footer {
-  margin-top: 40px;
-  font-style: italic;
-  opacity: 0.85;
-}
-</style>
+    .cartas img {
+      width: 200px;
+      border-radius: 14px;
+      box-shadow: 0 0 20px rgba(255,215,150,.5);
+    }
+  </style>
 </head>
 
 <body>
 
-<h1>Tarot Profundo</h1>
-<p>Elegí tres cartas y dejá que hablen.</p>
+  <h1>Tarot Profundo</h1>
+  <p>Elegí tres cartas y dejá que hablen</p>
 
-<div class="cartas">
-  <img src="carta1.png" class="carta">
-  <img src="carta2.png" class="carta">
-  <img src="carta3.png" class="carta">
-</div>
-
-<button onclick="location.reload()">Nueva tirada</button>
-
-<div class="footer">
-✨ Escuchá lo que tu alma ya sabe ✨
-</div>
+  <div class="cartas">
+    <img src="img/mago.png" alt="El Mago">
+    <img src="img/sacerdotisa.png" alt="La Sacerdotisa">
+    <img src="img/luna.png" alt="La Luna">
+  </div>
 
 </body>
 </html>
