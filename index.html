@@ -2,56 +2,44 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tarot Profundo</title>
 
   <style>
     body {
-  margin: 0;
-  font-family: 'Georgia', serif;
-  color: #f3e9d2;
-  text-align: center;
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Georgia', serif;
+      color: #f3e9d2;
+      text-align: center;
 
-  background:
-    radial-gradient(circle at top, rgba(255,215,150,0.25), transparent 40%),
-    radial-gradient(circle at bottom, rgba(120,60,160,0.4), transparent 60%),
-    linear-gradient(180deg, #2b0f45 0%, #3a145f 50%, #1a082d 100%);
-}
+      background:
+        radial-gradient(circle at top, rgba(255,215,150,0.35), transparent 45%),
+        radial-gradient(circle at bottom, rgba(120,60,160,0.45), transparent 60%),
+        linear-gradient(180deg, #2b0f45 0%, #3a145f 50%, #1a082d 100%);
+    }
 
     h1 {
       margin-top: 40px;
       font-size: 2.5rem;
-      font-weight: 500;
     }
 
-    h2 {
-      font-weight: 300;
-      font-size: 1.2rem;
-      margin-bottom: 40px;
+    p {
+      margin-bottom: 30px;
+      font-size: 1.1rem;
     }
 
     .cards {
       display: flex;
       justify-content: center;
-      gap: 30px;
-      margin-bottom: 40px;
+      gap: 25px;
       flex-wrap: wrap;
     }
 
-    .card-container {
-      width: 150px;
-      height: 260px;
-      background: #000;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
     .card {
-      width: 130px;
-      height: auto;
-      cursor: pointer;
+      width: 180px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.7);
       transition: transform 0.3s ease;
     }
 
@@ -59,25 +47,20 @@
       transform: scale(1.05);
     }
 
-    .button {
-      background: #e6c27a;
-      color: #3b2b0f;
-      padding: 14px 36px;
+    button {
+      margin-top: 40px;
+      padding: 14px 30px;
+      font-size: 18px;
       border-radius: 30px;
       border: none;
-      font-size: 1.1rem;
+      background: #e5c27a;
+      color: #2b1a05;
       cursor: pointer;
-      margin-bottom: 20px;
-    }
-
-    .button:hover {
-      background: #f1d58f;
     }
 
     .footer {
       margin-top: 20px;
-      font-size: 1rem;
-      opacity: 0.85;
+      opacity: 0.8;
     }
   </style>
 </head>
@@ -85,51 +68,17 @@
 <body>
 
   <h1>Tarot Profundo</h1>
-  <h2>Elegí tres cartas y dejá que hablen.</h2>
+  <p>Elegí tres cartas y dejá que hablen.</p>
 
-  <div class="cards" id="cards"></div>
+  <div class="cards">
+    <img src="img/mago.png" class="card">
+    <img src="img/sacerdotisa.png" class="card">
+    <img src="img/luna.png" class="card">
+  </div>
 
-  <button class="button" onclick="nuevaTirada()">Nueva tirada</button>
+  <button>Nueva tirada</button>
 
   <div class="footer">✨ Escuchá lo que tu alma ya sabe ✨</div>
 
-  <script>
-    const cartas = [
-      "img/mago.png",
-      "img/sacerdotisa.png",
-      "img/luna.png"
-    ];
-
-    function mezclar(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    function nuevaTirada() {
-      const contenedor = document.getElementById("cards");
-      contenedor.innerHTML = "";
-
-      const seleccion = mezclar([...cartas]).slice(0, 3);
-
-      seleccion.forEach(src => {
-        const wrapper = document.createElement("div");
-        wrapper.className = "card-container";
-
-        const img = document.createElement("img");
-        img.src = src;
-        img.className = "card";
-
-        wrapper.appendChild(img);
-        contenedor.appendChild(wrapper);
-      });
-    }
-
-    // Primera tirada automática
-    nuevaTirada();
-  </script>
-
 </body>
-</html> 
+</html>
