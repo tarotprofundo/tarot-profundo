@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,13 +10,14 @@
 body {
   margin: 0;
   font-family: 'Georgia', serif;
-  background: radial-gradient(circle at top, #4b2b63, #1c0f2b);
-  color: #f5e6c8;
+  background: radial-gradient(circle at top, #4b2a63, #1b0c2b);
+  color: #f3e6c8;
   text-align: center;
+  min-height: 100vh;
 }
 
 h1 {
-  margin-top: 30px;
+  margin-top: 40px;
   font-size: 38px;
 }
 
@@ -29,22 +29,20 @@ p {
 .cards {
   display: flex;
   justify-content: center;
-  gap: 24px;
+  gap: 25px;
   margin-top: 40px;
   flex-wrap: wrap;
 }
 
 .card {
-  width: 180px;
+  width: 170px;
   height: 300px;
   background: black;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
   cursor: pointer;
-  box-shadow: 0 0 20px rgba(0,0,0,0.6);
-  transition: transform 0.4s ease;
+  transition: transform 0.3s ease;
 }
 
 .card:hover {
@@ -55,13 +53,11 @@ p {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 16px;
-  display: none;
 }
 
 button {
   margin-top: 35px;
-  padding: 14px 32px;
+  padding: 14px 34px;
   border-radius: 30px;
   border: none;
   background: #e6c77b;
@@ -82,41 +78,37 @@ footer {
 <p>Elegí tres cartas y dejá que hablen.</p>
 
 <div class="cards">
-  <div class="card" onclick="revelar(this)">
-    <img src="mago.png">
-  </div>
-  <div class="card" onclick="revelar(this)">
-    <img src="sacerdotisa.png">
-  </div>
-  <div class="card" onclick="revelar(this)">
-    <img src="luna.png">
-  </div>
+
+  <div class="card"><img src="img/loco.png" alt="El Loco"></div>
+  <div class="card"><img src="img/mago.png" alt="El Mago"></div>
+  <div class="card"><img src="img/sacerdotisa.png" alt="La Sacerdotisa"></div>
+  <div class="card"><img src="img/emperatriz.png" alt="La Emperatriz"></div>
+  <div class="card"><img src="img/emperador.png" alt="El Emperador"></div>
+  <div class="card"><img src="img/hierofante.png" alt="El Hierofante"></div>
+  <div class="card"><img src="img/enamorados.png" alt="Los Enamorados"></div>
+  <div class="card"><img src="img/carro.png" alt="El Carro"></div>
+  <div class="card"><img src="img/fuerza.png" alt="La Fuerza"></div>
+  <div class="card"><img src="img/ermitaño.png" alt="El Ermitaño"></div>
+  <div class="card"><img src="img/rueda.png" alt="La Rueda de la Fortuna"></div>
+  <div class="card"><img src="img/justicia.png" alt="La Justicia"></div>
+  <div class="card"><img src="img/colgado.png" alt="El Colgado"></div>
+  <div class="card"><img src="img/muerte.png" alt="La Muerte"></div>
+  <div class="card"><img src="img/templanza.png" alt="La Templanza"></div>
+  <div class="card"><img src="img/diablo.png" alt="El Diablo"></div>
+  <div class="card"><img src="img/torre.png" alt="La Torre"></div>
+  <div class="card"><img src="img/estrella.png" alt="La Estrella"></div>
+  <div class="card"><img src="img/luna.png" alt="La Luna"></div>
+  <div class="card"><img src="img/sol.png" alt="El Sol"></div>
+  <div class="card"><img src="img/juicio.png" alt="El Juicio"></div>
+  <div class="card"><img src="img/mundo.png" alt="El Mundo"></div>
+
 </div>
 
-<button onclick="nuevaTirada()">Nueva tirada</button>
+<button onclick="location.reload()">Nueva tirada</button>
 
-<footer>✨ Escuchá lo que tu alma ya sabe ✨</footer>
-
-<audio id="shuffleSound" src="shuffle.mp3"></audio>
-
-<script>
-function nuevaTirada() {
-  const cards = document.querySelectorAll('.card img');
-  const sound = document.getElementById("shuffleSound");
-
-  sound.currentTime = 0;
-  sound.play();
-
-  cards.forEach(card => {
-    card.style.display = "none";
-  });
-}
-
-function revelar(card) {
-  const img = card.querySelector("img");
-  img.style.display = "block";
-}
-</script>
+<footer>
+✨ Escuchá lo que tu alma ya sabe ✨
+</footer>
 
 </body>
 </html>
