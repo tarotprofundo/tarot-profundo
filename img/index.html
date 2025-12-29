@@ -1,1 +1,122 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Tarot Profundo</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background: radial-gradient(circle at top, #4b2b63, #1c0f2b);
+  color: #f5e6c8;
+  text-align: center;
+}
+
+h1 {
+  margin-top: 30px;
+  font-size: 38px;
+}
+
+p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 180px;
+  height: 300px;
+  background: black;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  transition: transform 0.4s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  display: none;
+}
+
+button {
+  margin-top: 35px;
+  padding: 14px 32px;
+  border-radius: 30px;
+  border: none;
+  background: #e6c77b;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+footer {
+  margin-top: 30px;
+  opacity: 0.85;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Tarot Profundo</h1>
+<p>Elegí tres cartas y dejá que hablen.</p>
+
+<div class="cards">
+  <div class="card" onclick="revelar(this)">
+    <img src="mago.png">
+  </div>
+  <div class="card" onclick="revelar(this)">
+    <img src="sacerdotisa.png">
+  </div>
+  <div class="card" onclick="revelar(this)">
+    <img src="luna.png">
+  </div>
+</div>
+
+<button onclick="nuevaTirada()">Nueva tirada</button>
+
+<footer>✨ Escuchá lo que tu alma ya sabe ✨</footer>
+
+<audio id="shuffleSound" src="shuffle.mp3"></audio>
+
+<script>
+function nuevaTirada() {
+  const cards = document.querySelectorAll('.card img');
+  const sound = document.getElementById("shuffleSound");
+
+  sound.currentTime = 0;
+  sound.play();
+
+  cards.forEach(card => {
+    card.style.display = "none";
+  });
+}
+
+function revelar(card) {
+  const img = card.querySelector("img");
+  img.style.display = "block";
+}
+</script>
+
+</body>
+</html>
