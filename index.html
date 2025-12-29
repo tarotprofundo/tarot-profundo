@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 <title>Tarot Profundo</title>
 
 <style>
@@ -40,7 +41,7 @@ h2 {
   border-radius: 18px;
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.8s;
+  transition: transform 1s ease;
   box-shadow: 0 12px 30px rgba(0,0,0,0.6);
 }
 
@@ -81,6 +82,11 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 .mensaje {
   margin-top: 24px;
   font-size: 1.1rem;
@@ -95,9 +101,11 @@ button {
 
 <div class="cards" id="cards"></div>
 
-<button onclick="tirarCartas()">Nueva tirada</button>
+<button id="btn" onclick="tirarCartas()">Nueva tirada</button>
 
 <div class="mensaje">✨ Escuchá lo que tu alma ya sabe ✨</div>
+
+<audio id="shuffleSound" src="img/shuffle.mp3"></audio>
 
 <script>
 const cartas = [
@@ -106,7 +114,17 @@ const cartas = [
   "img/luna.png"
 ];
 
+let yaTiro = false;
+
 function tirarCartas() {
+  if (yaTiro) return;
+
+  yaTiro = true;
+  document.getElementById("btn").disabled = true;
+
+  const sonido = document.getElementById("shuffleSound");
+  sonido.play();
+
   const contenedor = document.getElementById("cards");
   contenedor.innerHTML = "";
 
@@ -133,7 +151,7 @@ function tirarCartas() {
 
     setTimeout(() => {
       card.classList.add("flip");
-    }, 400 + i * 300);
+    }, 600 + i * 500);
   });
 }
 
