@@ -8,9 +8,9 @@
   <style>
     body {
       margin: 0;
-      font-family: "Georgia", serif;
-      background: radial-gradient(circle at top, #3a1c5a, #1b0f2b);
-      color: #f3e6c8;
+      font-family: serif;
+      background: radial-gradient(circle at top, #3a1c5a, #1a0f2a);
+      color: #f5e6c8;
       text-align: center;
       min-height: 100vh;
     }
@@ -18,11 +18,11 @@
     h1 {
       margin-top: 40px;
       font-size: 36px;
+      font-weight: 500;
     }
 
-    h2 {
-      font-weight: normal;
-      margin-top: 10px;
+    p {
+      margin-top: 8px;
       font-size: 18px;
       opacity: 0.9;
     }
@@ -30,21 +30,21 @@
     .cards {
       display: flex;
       justify-content: center;
-      gap: 28px;
+      gap: 24px;
       margin-top: 40px;
       flex-wrap: nowrap;
     }
 
     .card {
       width: 160px;
-      height: 260px;
+      height: 280px;
       background: black;
-      border-radius: 18px;
-      padding: 10px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+      border-radius: 16px;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      overflow: hidden;
     }
 
     .card img {
@@ -54,21 +54,21 @@
       border-radius: 12px;
     }
 
-    .button {
-      margin-top: 35px;
+    button {
+      margin-top: 40px;
       padding: 14px 36px;
+      font-size: 18px;
       border-radius: 30px;
       border: none;
-      background: #e6c07b;
-      color: #3a2b1b;
-      font-size: 18px;
+      background: #e6c37a;
+      color: #3a2a00;
       cursor: pointer;
     }
 
     .footer {
-      margin-top: 20px;
-      font-size: 14px;
-      opacity: 0.8;
+      margin-top: 25px;
+      font-size: 16px;
+      opacity: 0.85;
     }
   </style>
 </head>
@@ -76,27 +76,40 @@
 <body>
 
   <h1>Tarot Profundo</h1>
-  <h2>Elegí tres cartas y dejá que hablen.</h2>
+  <p>Elegí tres cartas y dejá que hablen.</p>
 
-  <div class="cards">
-    <div class="card">
-      <img src="img/mago.png" alt="El Mago">
-    </div>
+  <div class="cards" id="cards"></div>
 
-    <div class="card">
-      <img src="img/sacerdotisa.png" alt="La Sacerdotisa">
-    </div>
+  <button onclick="tirarCartas()">Nueva tirada</button>
 
-    <div class="card">
-      <img src="img/luna.png" alt="La Luna">
-    </div>
-  </div>
+  <div class="footer">✨ Escuchá lo que tu alma ya sabe ✨</div>
 
-  <button class="button">Nueva tirada</button>
+  <script>
+    const cartas = [
+      "img/mago.png",
+      "img/sacerdotisa.png",
+      "img/luna.png"
+    ];
 
-  <div class="footer">
-    ✨ Escuchá lo que tu alma ya sabe ✨
-  </div>
+    function tirarCartas() {
+      const mezcladas = [...cartas].sort(() => 0.5 - Math.random());
+      const contenedor = document.getElementById("cards");
+      contenedor.innerHTML = "";
+
+      mezcladas.slice(0, 3).forEach(src => {
+        const div = document.createElement("div");
+        div.className = "card";
+
+        const img = document.createElement("img");
+        img.src = src;
+
+        div.appendChild(img);
+        contenedor.appendChild(div);
+      });
+    }
+
+    tirarCartas();
+  </script>
 
 </body>
 </html>
