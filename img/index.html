@@ -29,34 +29,51 @@ p {
 .cards {
   display: flex;
   justify-content: center;
-  gap: 25px;
+  gap: 30px;
   margin-top: 40px;
   flex-wrap: wrap;
+  perspective: 1200px;
 }
 
 .card {
-  width: 170px;
+  width: 180px;
   height: 300px;
-  background: black;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.9s;
+  cursor: pointer;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 12px 30px rgba(0,0,0,0.6);
-  cursor: pointer;
-  transition: transform 0.3s ease;
 }
 
-.card:hover {
-  transform: scale(1.05);
+.back {
+  background: #000;
 }
 
-.card img {
+.front {
+  transform: rotateY(180deg);
+}
+
+img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 button {
-  margin-top: 35px;
+  margin-top: 40px;
   padding: 14px 34px;
   border-radius: 30px;
   border: none;
@@ -66,8 +83,8 @@ button {
 }
 
 footer {
-  margin-top: 30px;
-  opacity: 0.85;
+  margin-top: 25px;
+  opacity: 0.8;
 }
 </style>
 </head>
@@ -77,38 +94,79 @@ footer {
 <h1>Tarot Profundo</h1>
 <p>Elegí tres cartas y dejá que hablen.</p>
 
-<div class="cards">
+<div class="cards" id="cards"></div>
 
-  <div class="card"><img src="img/loco.png" alt="El Loco"></div>
-  <div class="card"><img src="img/mago.png" alt="El Mago"></div>
-  <div class="card"><img src="img/sacerdotisa.png" alt="La Sacerdotisa"></div>
-  <div class="card"><img src="img/emperatriz.png" alt="La Emperatriz"></div>
-  <div class="card"><img src="img/emperador.png" alt="El Emperador"></div>
-  <div class="card"><img src="img/hierofante.png" alt="El Hierofante"></div>
-  <div class="card"><img src="img/enamorados.png" alt="Los Enamorados"></div>
-  <div class="card"><img src="img/carro.png" alt="El Carro"></div>
-  <div class="card"><img src="img/fuerza.png" alt="La Fuerza"></div>
-  <div class="card"><img src="img/ermitaño.png" alt="El Ermitaño"></div>
-  <div class="card"><img src="img/rueda.png" alt="La Rueda de la Fortuna"></div>
-  <div class="card"><img src="img/justicia.png" alt="La Justicia"></div>
-  <div class="card"><img src="img/colgado.png" alt="El Colgado"></div>
-  <div class="card"><img src="img/muerte.png" alt="La Muerte"></div>
-  <div class="card"><img src="img/templanza.png" alt="La Templanza"></div>
-  <div class="card"><img src="img/diablo.png" alt="El Diablo"></div>
-  <div class="card"><img src="img/torre.png" alt="La Torre"></div>
-  <div class="card"><img src="img/estrella.png" alt="La Estrella"></div>
-  <div class="card"><img src="img/luna.png" alt="La Luna"></div>
-  <div class="card"><img src="img/sol.png" alt="El Sol"></div>
-  <div class="card"><img src="img/juicio.png" alt="El Juicio"></div>
-  <div class="card"><img src="img/mundo.png" alt="El Mundo"></div>
+<button onclick="nuevaTirada()">Nueva tirada</button>
 
-</div>
+<footer>✨ Escuchá lo que tu alma ya sabe ✨</footer>
 
-<button onclick="location.reload()">Nueva tirada</button>
+<script>
+const cartas = [
+  "img/loco.png",
+  "img/mago.png",
+  "img/sacerdotisa.png",
+  "img/emperatriz.png",
+  "img/emperador.png",
+  "img/hierofante.png",
+  "img/enamorados.png",
+  "img/carro.png",
+  "img/fuerza.png",
+  "img/ermitaño.png",
+  "img/rueda.png",
+  "img/justicia.png",
+  "img/colgado.png",
+  "img/muerte.png",
+  "img/templanza.png",
+  "img/diablo.png",
+  "img/torre.png",
+  "img/estrella.png",
+  "img/luna.png",
+  "img/sol.png",
+  "img/juicio.png",
+  "img/mundo.png"
+];
 
-<footer>
-✨ Escuchá lo que tu alma ya sabe ✨
-</footer>
+function mezclar(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+function nuevaTirada() {
+  const contenedor = document.getElementById("cards");
+  contenedor.innerHTML = "";
+
+  const seleccion = mezclar([...cartas]).slice(0, 3);
+
+  seleccion.forEach((src, i) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const back = document.createElement("div");
+    back.className = "face back";
+
+    const front = document.createElement("div");
+    front.className = "face front";
+
+    const img = document.createElement("img");
+    img.src = src;
+
+    front.appendChild(img);
+    card.appendChild(back);
+    card.appendChild(front);
+
+    card.onclick = () => {
+      card.classList.add("flipped");
+    };
+
+    setTimeout(() => {
+      card.classList.add("flipped");
+    }, i * 400);
+
+    contenedor.appendChild(card);
+  });
+}
+
+nuevaTirada();
+</script>
 
 </body>
 </html>
