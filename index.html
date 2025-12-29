@@ -118,7 +118,43 @@ function mezclar(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
-function nuevaTirada() {
+<script>
+const cartas = [
+  "mago.png",
+  "sacerdotisa.png",
+  "emperatriz.png",
+  "emperador.png",
+  "luna.png"
+];
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function nuevaTirada() {
+  const cards = document.querySelectorAll(".card");
+  const audio = document.getElementById("shuffle");
+
+  // Mezclar cartas
+  const mezcladas = [...cartas].sort(() => Math.random() - 0.5);
+
+  // Resetear todas
+  cards.forEach(card => {
+    card.classList.remove("flip");
+    void card.offsetWidth;
+  });
+
+  audio.currentTime = 0;
+  audio.play();
+
+  // GIRAR UNA POR UNA
+  for (let i = 0; i < cards.length; i++) {
+    document.getElementById(`c${i + 1}`).src = "img/" + mezcladas[i];
+    await sleep(600);
+    cards[i].classList.add("flip");
+  }
+}
+</script>
   const cartasMezcladas = mezclar([...cartas]);
   const cards = document.querySelectorAll(".card");
 
