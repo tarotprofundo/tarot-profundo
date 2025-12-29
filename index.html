@@ -1,162 +1,115 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <title>Tarot Profundo</title>
 
-<title>Tarot Profundo</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: serif;
+      background: radial-gradient(circle, #3a1c5a, #1b0b2e);
+      color: #f5e6c8;
+      text-align: center;
+    }
 
-<style>
-body {
-  margin: 0;
-  font-family: Georgia, serif;
-  background: radial-gradient(circle at top, #5a3b75, #2b143f);
-  color: #f5e6c8;
-  text-align: center;
-  min-height: 100vh;
-}
+    h1 {
+      margin-top: 40px;
+      font-size: 40px;
+    }
 
-h1 {
-  margin-top: 40px;
-  font-size: 2.4rem;
-}
+    h2 {
+      font-weight: normal;
+      margin-bottom: 40px;
+    }
 
-h2 {
-  font-weight: normal;
-  margin-bottom: 40px;
-}
+    .cards {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
 
-.cards {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap;
-  perspective: 1200px;
-}
+    .card {
+      width: 170px;
+      height: 300px;
+      background: black;
+      border-radius: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+      overflow: hidden;
+    }
 
-.card {
-  width: 160px;
-  height: 280px;
-  background: #000;
-  border-radius: 18px;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 1s ease;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
-}
+    .card img {
+      width: 100%;
+      height: auto;
+      display: none;
+    }
 
-.card.flip {
-  transform: rotateY(180deg);
-}
+    .card.revealed img {
+      display: block;
+    }
 
-.card-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 18px;
-}
+    button {
+      margin-top: 40px;
+      padding: 15px 40px;
+      font-size: 18px;
+      border-radius: 30px;
+      border: none;
+      background: #e6c77b;
+      color: #3b2a16;
+      cursor: pointer;
+    }
 
-.card-back {
-  background: linear-gradient(135deg, #111, #000);
-}
-
-.card-front {
-  transform: rotateY(180deg);
-}
-
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-button {
-  margin-top: 40px;
-  padding: 14px 36px;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 40px;
-  background: #e3c27a;
-  color: #3a2600;
-  cursor: pointer;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-.mensaje {
-  margin-top: 24px;
-  font-size: 1.1rem;
-}
-</style>
+    .footer {
+      margin-top: 25px;
+      font-size: 18px;
+      opacity: 0.8;
+    }
+  </style>
 </head>
 
 <body>
 
-<h1>Tarot Profundo</h1>
-<h2>Elegí tres cartas y dejá que hablen.</h2>
+  <h1>Tarot Profundo</h1>
+  <h2>Elegí tres cartas y dejá que hablen.</h2>
 
-<div class="cards" id="cards"></div>
+  <div class="cards">
+    <div class="card" onclick="reveal(this)">
+      <img src="img/mago.png">
+    </div>
+    <div class="card" onclick="reveal(this)">
+      <img src="img/sacerdotisa.png">
+    </div>
+    <div class="card" onclick="reveal(this)">
+      <img src="img/luna.png">
+    </div>
+  </div>
 
-<button id="btn" onclick="tirarCartas()">Nueva tirada</button>
+  <button onclick="nuevaTirada()">Nueva tirada</button>
 
-<div class="mensaje">✨ Escuchá lo que tu alma ya sabe ✨</div>
+  <div class="footer">✨ Escuchá lo que tu alma ya sabe ✨</div>
 
-<audio id="shuffleSound" src="img/shuffle.mp3"></audio>
+  <audio id="shuffleSound" src="img/shuffle.mp3"></audio>
 
-<script>
-const cartas = [
-  "img/mago.png",
-  "img/sacerdotisa.png",
-  "img/luna.png"
-];
+  <script>
+    function reveal(card) {
+      card.classList.add("revealed");
 
-let yaTiro = false;
+      const sound = document.getElementById("shuffleSound");
+      sound.currentTime = 0;
+      sound.play();
+    }
 
-function tirarCartas() {
-  if (yaTiro) return;
-
-  yaTiro = true;
-  document.getElementById("btn").disabled = true;
-
-  const sonido = document.getElementById("shuffleSound");
-  sonido.play();
-
-  const contenedor = document.getElementById("cards");
-  contenedor.innerHTML = "";
-
-  const mezcladas = [...cartas].sort(() => Math.random() - 0.5);
-
-  mezcladas.forEach((imgSrc, i) => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    const back = document.createElement("div");
-    back.className = "card-face card-back";
-
-    const front = document.createElement("div");
-    front.className = "card-face card-front";
-
-    const img = document.createElement("img");
-    img.src = imgSrc;
-
-    front.appendChild(img);
-    card.appendChild(back);
-    card.appendChild(front);
-
-    contenedor.appendChild(card);
-
-    setTimeout(() => {
-      card.classList.add("flip");
-    }, 600 + i * 500);
-  });
-}
-
-tirarCartas();
-</script>
+    function nuevaTirada() {
+      document.querySelectorAll(".card").forEach(card => {
+        card.classList.remove("revealed");
+      });
+    }
+  </script>
 
 </body>
 </html>
