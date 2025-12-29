@@ -1,115 +1,147 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Tarot Profundo</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: serif;
-      background: radial-gradient(circle, #3a1c5a, #1b0b2e);
-      color: #f5e6c8;
-      text-align: center;
-    }
+<title>Tarot Profundo</title>
 
-    h1 {
-      margin-top: 40px;
-      font-size: 40px;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: serif;
+  background: radial-gradient(circle at top, #4b2a6a, #1c0f2b);
+  color: #f3e6c8;
+  text-align: center;
+  min-height: 100vh;
+}
 
-    h2 {
-      font-weight: normal;
-      margin-bottom: 40px;
-    }
+h1 {
+  margin-top: 40px;
+  font-size: 38px;
+}
 
-    .cards {
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      flex-wrap: wrap;
-    }
+p {
+  opacity: 0.9;
+}
 
-    .card {
-      width: 170px;
-      height: 300px;
-      background: black;
-      border-radius: 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.7);
-      overflow: hidden;
-    }
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
 
-    .card img {
-      width: 100%;
-      height: auto;
-      display: none;
-    }
+.card {
+  width: 180px;
+  height: 300px;
+  perspective: 1200px;
+}
 
-    .card.revealed img {
-      display: block;
-    }
+.card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.9s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
 
-    button {
-      margin-top: 40px;
-      padding: 15px 40px;
-      font-size: 18px;
-      border-radius: 30px;
-      border: none;
-      background: #e6c77b;
-      color: #3b2a16;
-      cursor: pointer;
-    }
+.card.revealed .card-inner {
+  transform: rotateY(180deg);
+}
 
-    .footer {
-      margin-top: 25px;
-      font-size: 18px;
-      opacity: 0.8;
-    }
-  </style>
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.card-back {
+  background: black;
+}
+
+.card-front {
+  transform: rotateY(180deg);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+button {
+  margin-top: 40px;
+  padding: 14px 34px;
+  border-radius: 30px;
+  border: none;
+  background: #e3c57b;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.footer {
+  margin-top: 20px;
+  opacity: 0.8;
+}
+</style>
 </head>
 
 <body>
 
-  <h1>Tarot Profundo</h1>
-  <h2>Elegí tres cartas y dejá que hablen.</h2>
+<h1>Tarot Profundo</h1>
+<p>Elegí tres cartas y dejá que hablen.</p>
 
-  <div class="cards">
-    <div class="card" onclick="reveal(this)">
-      <img src="img/mago.png">
-    </div>
-    <div class="card" onclick="reveal(this)">
-      <img src="img/sacerdotisa.png">
-    </div>
-    <div class="card" onclick="reveal(this)">
-      <img src="img/luna.png">
+<div class="cards">
+  <div class="card" onclick="revelar(this)">
+    <div class="card-inner">
+      <div class="card-face card-back"></div>
+      <div class="card-face card-front">
+        <img src="img/mago.png">
+      </div>
     </div>
   </div>
 
-  <button onclick="nuevaTirada()">Nueva tirada</button>
+  <div class="card" onclick="revelar(this)">
+    <div class="card-inner">
+      <div class="card-face card-back"></div>
+      <div class="card-face card-front">
+        <img src="img/sacerdotisa.png">
+      </div>
+    </div>
+  </div>
 
-  <div class="footer">✨ Escuchá lo que tu alma ya sabe ✨</div>
+  <div class="card" onclick="revelar(this)">
+    <div class="card-inner">
+      <div class="card-face card-back"></div>
+      <div class="card-face card-front">
+        <img src="img/luna.png">
+      </div>
+    </div>
+  </div>
+</div>
 
-  <audio id="shuffleSound" src="img/shuffle.mp3"></audio>
+<button onclick="nuevaTirada()">Nueva tirada</button>
 
-  <script>
-    function reveal(card) {
-      card.classList.add("revealed");
+<div class="footer">✨ Escuchá lo que tu alma ya sabe ✨</div>
 
-      const sound = document.getElementById("shuffleSound");
-      sound.currentTime = 0;
-      sound.play();
-    }
+<script>
+function revelar(card) {
+  card.classList.add("revealed");
+  const audio = new Audio("img/shuffle.mp3");
+  audio.play().catch(() => {});
+}
 
-    function nuevaTirada() {
-      document.querySelectorAll(".card").forEach(card => {
-        card.classList.remove("revealed");
-      });
-    }
-  </script>
+function nuevaTirada() {
+  document.querySelectorAll(".card").forEach(c => {
+    c.classList.remove("revealed");
+  });
+}
+</script>
 
 </body>
 </html>
