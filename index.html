@@ -17,7 +17,7 @@ body {
 
 h1 {
   margin-top: 40px;
-  font-size: 42px;
+  font-size: 40px;
 }
 
 .subtitle {
@@ -28,14 +28,13 @@ h1 {
 .cards {
   display: flex;
   justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap;
+  gap: 30px;
   margin-bottom: 30px;
 }
 
 .card {
-  width: 160px;
-  height: 260px;
+  width: 170px;
+  height: 280px;
   perspective: 1000px;
 }
 
@@ -50,11 +49,11 @@ h1 {
   transform: rotateY(180deg);
 }
 
-.front, .back {
+.face {
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: 14px;
+  border-radius: 16px;
   backface-visibility: hidden;
 }
 
@@ -70,13 +69,13 @@ h1 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: 16px;
 }
 
 button {
   background: #e6c87a;
   border: none;
-  padding: 14px 30px;
+  padding: 14px 32px;
   font-size: 18px;
   border-radius: 30px;
   cursor: pointer;
@@ -96,16 +95,14 @@ button {
 <div class="subtitle">Elegí tres cartas y dejá que hablen.</div>
 
 <div class="cards">
-  <div class="card"><div class="inner"><div class="front"></div><div class="back"><img id="c1"></div></div></div>
-  <div class="card"><div class="inner"><div class="front"></div><div class="back"><img id="c2"></div></div></div>
-  <div class="card"><div class="inner"><div class="front"></div><div class="back"><img id="c3"></div></div></div>
+  <div class="card"><div class="inner"><div class="face front"></div><div class="face back"><img id="c1"></div></div></div>
+  <div class="card"><div class="inner"><div class="face front"></div><div class="face back"><img id="c2"></div></div></div>
+  <div class="card"><div class="inner"><div class="face front"></div><div class="face back"><img id="c3"></div></div></div>
 </div>
 
 <button onclick="nuevaTirada()">Nueva tirada</button>
 
 <div class="footer">✨ Escuchá lo que tu alma ya sabe ✨</div>
-
-<audio id="shuffleSound" src="img/shuffle.mp3"></audio>
 
 <script>
 const cartas = [
@@ -117,28 +114,29 @@ const cartas = [
 ];
 
 function mezclar(array) {
-  return array
-    .map(value => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value);
+  let copia = [...array];
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia;
 }
 
 function nuevaTirada() {
-  const sonido = document.getElementById("shuffleSound");
-  sonido.currentTime = 0;
-  sonido.play();
+  const mezcla = mezclar(cartas).slice(0, 3);
+  const cartasHTML = document.querySelectorAll(".card");
 
-  const mezcla = mezclar([...cartas]).slice(0, 3);
-
-  document.querySelectorAll(".card").forEach((card, i) => {
+  cartasHTML.forEach((card, i) => {
     card.classList.remove("flip");
 
     setTimeout(() => {
       document.getElementById("c" + (i + 1)).src = "img/" + mezcla[i];
       card.classList.add("flip");
-    }, 400);
+    }, 400 * i);
   });
 }
+
+window.onload = nuevaTirada;
 </script>
 
 </body>
