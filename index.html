@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tarot Profundo</title>
 
 <style>
 body {
   margin: 0;
   font-family: serif;
-  background: linear-gradient(#3b2158, #1d0f2e);
-  color: #f5e7c6;
+  background: radial-gradient(circle at top, #4b2c63, #1a0f2b);
+  color: #f5e6c8;
   text-align: center;
 }
 
@@ -19,51 +20,68 @@ h1 {
 }
 
 p {
-  margin-bottom: 30px;
+  margin-top: 10px;
   font-size: 18px;
 }
 
 .cartas {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 25px;
   margin-top: 40px;
 }
 
 .carta {
-  width: 180px;
-  height: 300px;
-  background: black;
-  border-radius: 14px;
-  overflow: hidden;
+  width: 160px;
+  height: 260px;
+  perspective: 1200px;
   cursor: pointer;
-  perspective: 1000px;
+}
+
+.cara {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 16px;
+  backface-visibility: hidden;
+  transition: transform 0.8s ease;
+}
+
+.frente {
+  background: black;
+}
+
+.dorso {
+  transform: rotateY(180deg);
+}
+
+.carta.flip .frente {
+  transform: rotateY(180deg);
+}
+
+.carta.flip .dorso {
+  transform: rotateY(360deg);
 }
 
 .carta img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transform: rotateY(180deg);
-  transition: transform 0.8s ease;
-}
-
-.carta.flip img {
-  transform: rotateY(0deg);
+  border-radius: 16px;
 }
 
 button {
   margin-top: 40px;
-  padding: 14px 36px;
-  font-size: 18px;
-  border-radius: 30px;
+  padding: 12px 30px;
+  border-radius: 25px;
   border: none;
-  background: #e6c37a;
+  background: #e8c77a;
+  font-size: 18px;
   cursor: pointer;
 }
 
 .footer {
-  margin-top: 30px;
+  margin-top: 20px;
+  font-size: 14px;
   opacity: 0.8;
 }
 </style>
@@ -75,9 +93,20 @@ button {
 <p>Elegí tres cartas y dejá que hablen.</p>
 
 <div class="cartas">
-  <div class="carta"><img></div>
-  <div class="carta"><img></div>
-  <div class="carta"><img></div>
+  <div class="carta">
+    <div class="cara frente"></div>
+    <div class="cara dorso"><img></div>
+  </div>
+
+  <div class="carta">
+    <div class="cara frente"></div>
+    <div class="cara dorso"><img></div>
+  </div>
+
+  <div class="carta">
+    <div class="cara frente"></div>
+    <div class="cara dorso"><img></div>
+  </div>
 </div>
 
 <button onclick="nuevaTirada()">Nueva tirada</button>
@@ -112,21 +141,14 @@ const cartas = [
   "mundo.png"
 ];
 
-// Mezclar de verdad (Fisher-Yates)
-function mezclar(array) {
-  const copia = [...array];
-  for (let i = copia.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copia[i], copia[j]] = [copia[j], copia[i]];
-  }
-  return copia;
+function mezclar(arr) {
+  return [...arr].sort(() => Math.random() - 0.5);
 }
 
 function nuevaTirada() {
   const cartasHTML = document.querySelectorAll(".carta");
   const audio = document.getElementById("shuffle");
-
-  const mezcladas = mezclar(cartas).slice(0, 3);
+  const seleccion = mezclar(cartas).slice(0, 3);
 
   audio.currentTime = 0;
   audio.play();
@@ -135,9 +157,9 @@ function nuevaTirada() {
     carta.classList.remove("flip");
 
     setTimeout(() => {
-      carta.querySelector("img").src = "img/" + mezcladas[i];
+      carta.querySelector("img").src = "img/" + seleccion[i];
       carta.classList.add("flip");
-    }, 400 + i * 400);
+    }, 400 + i * 500);
   });
 }
 </script>
