@@ -8,85 +8,81 @@
 
 <style>
 body {
-    margin: 0;
-    font-family: 'Georgia', serif;
-    background: radial-gradient(circle at top, #4b2c5e, #2a163a);
-    color: #f2e6c9;
-    text-align: center;
+  margin: 0;
+  font-family: Georgia, serif;
+  background: radial-gradient(circle at top, #4b2c5e, #2a163a);
+  color: #f2e6c9;
+  text-align: center;
 }
 
 h1 {
-    margin-top: 30px;
-    font-size: 42px;
+  margin-top: 30px;
+  font-size: 42px;
 }
 
 p {
-    font-size: 18px;
-    opacity: 0.9;
+  font-size: 18px;
+  opacity: 0.9;
 }
 
 .contenedor {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 40px;
 }
 
 .carta {
-    width: 140px;
-    height: 240px;
-    perspective: 1000px;
+  width: 140px;
+  height: 240px;
+  perspective: 1000px;
 }
 
 .carta-inner {
-    width: 100%;
-    height: 100%;
-    transition: transform 1s;
-    transform-style: preserve-3d;
-    position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  position: relative;
 }
 
 .carta.volteada .carta-inner {
-    transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
 .frente, .dorso {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: 14px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  backface-visibility: hidden;
 }
 
 .dorso {
-    background: black;
+  background: black;
 }
 
 .frente {
-    transform: rotateY(180deg);
-    background-size: cover;
-    background-position: center;
+  transform: rotateY(180deg);
+  background-size: cover;
+  background-position: center;
 }
 
 button {
-    margin-top: 40px;
-    padding: 14px 40px;
-    border-radius: 40px;
-    border: none;
-    font-size: 18px;
-    background: #e5c27a;
-    color: #3a250f;
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: 0.9;
+  margin-top: 40px;
+  padding: 14px 40px;
+  border-radius: 40px;
+  border: none;
+  font-size: 18px;
+  background: #e5c27a;
+  color: #3a250f;
+  cursor: pointer;
 }
 
 .footer {
-    margin-top: 30px;
-    font-size: 15px;
-    opacity: 0.8;
+  margin-top: 30px;
+  font-size: 15px;
+  opacity: 0.8;
 }
 </style>
 </head>
@@ -97,9 +93,9 @@ button:hover {
 <p>Elegí tres cartas y dejá que hablen.</p>
 
 <div class="contenedor">
-    <div class="carta"><div class="carta-inner"><div class="dorso"></div><div class="frente" id="c1"></div></div></div>
-    <div class="carta"><div class="carta-inner"><div class="dorso"></div><div class="frente" id="c2"></div></div></div>
-    <div class="carta"><div class="carta-inner"><div class="dorso"></div><div class="frente" id="c3"></div></div></div>
+  <div class="carta"><div class="carta-inner"><div class="dorso"></div><div class="frente" id="c1"></div></div></div>
+  <div class="carta"><div class="carta-inner"><div class="dorso"></div><div class="frente" id="c2"></div></div></div>
+  <div class="carta"><div class="carta-inner"><div class="dorso"></div><div class="frente" id="c3"></div></div></div>
 </div>
 
 <button onclick="nuevaTirada()">Nueva tirada</button>
@@ -110,50 +106,28 @@ button:hover {
 
 <script>
 const cartas = [
-  "loco.png",
-  "mago.png",
-  "sacerdotisa.png",
-  "emperatriz.png",
-  "emperador.png",
-  "hierofante.png",
-  "enamorados.png",
-  "carro.png",
-  "fuerza.png",
-  "ermitano.png",
-  "rueda.png",
-  "justicia.png",
-  "colgado.png",
-  "muerte.png",
-  "templanza.png",
-  "diablo.png",
-  "torre.png",
-  "estrella.png",
-  "luna.png",
-  "sol.png",
-  "juicio.png",
-  "mundo.png"
+  "loco.png","mago.png","sacerdotisa.png","emperatriz.png","emperador.png",
+  "hierofante.png","enamorados.png","carro.png","fuerza.png","ermitano.png",
+  "rueda.png","justicia.png","colgado.png","muerte.png","templanza.png",
+  "diablo.png","torre.png","estrella.png","luna.png","sol.png","juicio.png","mundo.png"
 ];
 
-function mezclar(array) {
-    return array.sort(() => Math.random() - 0.5);
-}
-
 function nuevaTirada() {
-    const audio = document.getElementById("shuffle");
-    audio.currentTime = 0;
-    audio.play();
+  const audio = document.getElementById("shuffle");
+  audio.currentTime = 0;
+  audio.play();
 
-    const cartasHTML = document.querySelectorAll(".carta");
-    cartasHTML.forEach(c => c.classList.remove("volteada"));
+  const cartasDOM = document.querySelectorAll(".carta");
+  cartasDOM.forEach(c => c.classList.remove("volteada"));
 
-    const mezcla = mezclar([...cartas]).slice(0, 3);
+  const mezcla = [...cartas].sort(() => Math.random() - 0.5).slice(0, 3);
 
-    mezcla.forEach((img, i) => {
-        setTimeout(() => {
-            document.getElementById("c" + (i + 1)).style.backgroundImage = `url("img/${img}")`;
-            cartasHTML[i].classList.add("volteada");
-        }, 700 + i * 700);
-    });
+  mezcla.forEach((img, i) => {
+    setTimeout(() => {
+      document.getElementById("c" + (i + 1)).style.backgroundImage = `url("img/${img}")`;
+      cartasDOM[i].classList.add("volteada");
+    }, 700 * (i + 1));
+  });
 }
 </script>
 
