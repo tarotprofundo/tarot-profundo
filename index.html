@@ -97,7 +97,7 @@ const cartas = [
   "enamorados.png",
   "carro.png",
   "fuerza.png",
-  "ermitaño.png",
+  "ermitano.png",
   "rueda.png",
   "justicia.png",
   "colgado.png",
@@ -112,9 +112,9 @@ const cartas = [
   "mundo.png"
 ];
 
-// Mezcla real (Fisher-Yates)
+// Mezclar de verdad (Fisher-Yates)
 function mezclar(array) {
-  let copia = [...array];
+  const copia = [...array];
   for (let i = copia.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [copia[i], copia[j]] = [copia[j], copia[i]];
@@ -123,23 +123,21 @@ function mezclar(array) {
 }
 
 function nuevaTirada() {
+  const cartasHTML = document.querySelectorAll(".carta");
   const audio = document.getElementById("shuffle");
+
+  const mezcladas = mezclar(cartas).slice(0, 3);
+
   audio.currentTime = 0;
   audio.play();
 
-  const cartasMezcladas = mezclar(cartas).slice(0, 3);
-  const slots = document.querySelectorAll(".carta");
+  cartasHTML.forEach((carta, i) => {
+    carta.classList.remove("flip");
 
-  slots.forEach((slot, i) => {
-    slot.classList.remove("flip");
-  });
-
-  cartasMezcladas.forEach((carta, i) => {
     setTimeout(() => {
-      const img = slots[i].querySelector("img");
-      img.src = "img/" + carta;
-      slots[i].classList.add("flip");
-    }, 500 + i * 500);
+      carta.querySelector("img").src = "img/" + mezcladas[i];
+      carta.classList.add("flip");
+    }, 400 + i * 400);
   });
 }
 </script>
