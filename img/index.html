@@ -1,87 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tarot Profundo</title>
 
 <style>
 body {
   margin: 0;
   font-family: Georgia, serif;
-  background: radial-gradient(circle at top, #4b2c63, #1a0f2b);
+  background: radial-gradient(circle at top, #4b2b63, #1c1026);
   color: #f5e6c8;
   text-align: center;
 }
 
 h1 {
   margin-top: 40px;
-  font-size: 42px;
+  font-size: 40px;
 }
 
-p {
-  margin-top: 10px;
-  font-size: 18px;
+h2 {
+  font-weight: 300;
+  margin-bottom: 30px;
 }
 
-.cartas {
+.container {
   display: flex;
   justify-content: center;
   gap: 30px;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
-.carta {
-  width: 180px;
-  height: 300px;
-  perspective: 1200px;
+.card {
+  width: 160px;
+  height: 280px;
+  perspective: 1000px;
+  cursor: pointer;
 }
 
-.cara {
+.inner {
   width: 100%;
   height: 100%;
-  position: absolute;
-  border-radius: 16px;
-  backface-visibility: hidden;
-  transition: transform 0.8s ease;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s;
 }
 
-.frente {
+.card.flipped .inner {
+  transform: rotateY(180deg);
+}
+
+.front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  backface-visibility: hidden;
+}
+
+.front {
   background: black;
 }
 
-.dorso {
+.back {
   transform: rotateY(180deg);
-}
-
-.carta.flip .frente {
-  transform: rotateY(180deg);
-}
-
-.carta.flip .dorso {
-  transform: rotateY(360deg);
-}
-
-.carta img {
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
+  background-size: cover;
+  background-position: center;
 }
 
 button {
-  margin-top: 40px;
+  margin: 40px auto;
   padding: 14px 36px;
-  font-size: 18px;
   border-radius: 30px;
   border: none;
-  background: #e6c37a;
+  background: #e5c07b;
+  color: #2c1a3a;
+  font-size: 18px;
   cursor: pointer;
 }
 
 .footer {
-  margin-top: 30px;
+  margin-top: 20px;
   font-size: 14px;
   opacity: 0.8;
+}
+
+.texto {
+  max-width: 600px;
+  margin: 25px auto;
+  font-size: 18px;
+  line-height: 1.6;
 }
 </style>
 </head>
@@ -89,15 +97,34 @@ button {
 <body>
 
 <h1>Tarot Profundo</h1>
-<p>Elegí tres cartas y dejá que hablen.</p>
+<h2>Elegí tres cartas y dejá que hablen.</h2>
 
-<div class="cartas">
-  <div class="carta"><div class="cara frente"></div><div class="cara dorso"><img></div></div>
-  <div class="carta"><div class="cara frente"></div><div class="cara dorso"><img></div></div>
-  <div class="carta"><div class="cara frente"></div><div class="cara dorso"><img></div></div>
+<div class="container">
+  <div class="card" onclick="revelar(0)">
+    <div class="inner" id="card0">
+      <div class="front"></div>
+      <div class="back" id="img0"></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="revelar(1)">
+    <div class="inner" id="card1">
+      <div class="front"></div>
+      <div class="back" id="img1"></div>
+    </div>
+  </div>
+
+  <div class="card" onclick="revelar(2)">
+    <div class="inner" id="card2">
+      <div class="front"></div>
+      <div class="back" id="img2"></div>
+    </div>
+  </div>
 </div>
 
 <button onclick="nuevaTirada()">Nueva tirada</button>
+
+<div class="texto" id="texto"></div>
 
 <div class="footer">✨ Escuchá lo que tu alma ya sabe ✨</div>
 
@@ -105,56 +132,45 @@ button {
 
 <script>
 const cartas = [
-  "loco.png",
-  "mago.png",
-  "sacerdotisa.png",
-  "emperatriz.png",
-  "emperador.png",
-  "hierofante.png",
-  "enamorados.png",
-  "carro.png",
-  "fuerza.png",
-  "ermitano.png",
-  "rueda.png",
-  "justicia.png",
-  "colgado.png",
-  "muerte.png",
-  "templanza.png",
-  "diablo.png",
-  "torre.png",
-  "estrella.png",
-  "luna.png",
-  "sol.png",
-  "juicio.png",
-  "mundo.png"
+  {
+    nombre: "El Loco",
+    img: "img/loco.png",
+    texto: "No sabés exactamente qué estás haciendo, pero algo dentro tuyo ya dio el paso. El Loco aparece cuando la vida pide movimiento, no certezas. No es inconsciencia: es coraje. Si esperás estar lista, no salís nunca. Si avanzás ahora, algo verdadero empieza."
+  }
 ];
 
-function mezclar(array) {
-  const copia = [...array];
-  for (let i = copia.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copia[i], copia[j]] = [copia[j], copia[i]];
-  }
-  return copia;
-}
+let seleccionadas = [];
 
 function nuevaTirada() {
-  const cartasHTML = document.querySelectorAll(".carta");
-  const audio = document.getElementById("shuffle");
+  document.getElementById("shuffle").play();
 
-  audio.currentTime = 0;
-  audio.play().catch(() => {});
+  seleccionadas = [];
+  document.getElementById("texto").innerHTML = "";
 
-  const seleccion = mezclar(cartas).slice(0, 3);
+  for (let i = 0; i < 3; i++) {
+    const card = document.getElementById("card" + i);
+    card.classList.remove("flipped");
+  }
 
-  cartasHTML.forEach((carta, i) => {
-    carta.classList.remove("flip");
+  setTimeout(() => {
+    const mezcladas = [...cartas].sort(() => Math.random() - 0.5);
+    seleccionadas = mezcladas.slice(0, 3);
 
-    setTimeout(() => {
-      carta.querySelector("img").src = "img/" + seleccion[i];
-      carta.classList.add("flip");
-    }, 400 + i * 500);
-  });
+    seleccionadas.forEach((carta, i) => {
+      document.getElementById("img" + i).style.backgroundImage = `url('${carta.img}')`;
+    });
+  }, 600);
+}
+
+function revelar(i) {
+  const card = document.getElementById("card" + i);
+  if (!card.classList.contains("flipped")) {
+    card.classList.add("flipped");
+    if (seleccionadas[i]) {
+      document.getElementById("texto").innerHTML +=
+        `<p><b>${seleccionadas[i].nombre}</b><br>${seleccionadas[i].texto}</p>`;
+    }
+  }
 }
 </script>
 
