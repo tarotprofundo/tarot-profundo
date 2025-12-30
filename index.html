@@ -1,88 +1,92 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Tarot Profundo</title>
 
 <style>
 body {
-  margin: 0;
-  font-family: serif;
-  background: radial-gradient(circle at top, #4b2c63, #1a0f2b);
-  color: #f5e6c8;
-  text-align: center;
+    margin: 0;
+    font-family: 'Georgia', serif;
+    background: radial-gradient(circle at top, #4b2c5e, #2a163a);
+    color: #f2e6c9;
+    text-align: center;
 }
 
 h1 {
-  margin-top: 40px;
-  font-size: 42px;
+    margin-top: 30px;
+    font-size: 42px;
 }
 
 p {
-  margin-top: 10px;
-  font-size: 18px;
+    font-size: 18px;
+    opacity: 0.9;
 }
 
-.cartas {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  margin-top: 40px;
+.contenedor {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 40px;
 }
 
 .carta {
-  width: 160px;
-  height: 260px;
-  perspective: 1200px;
-  cursor: pointer;
+    width: 140px;
+    height: 240px;
+    perspective: 1000px;
 }
 
-.cara {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  border-radius: 16px;
-  backface-visibility: hidden;
-  transition: transform 0.8s ease;
+.carta-inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+    position: relative;
 }
 
-.frente {
-  background: black;
+.carta.volteada .carta-inner {
+    transform: rotateY(180deg);
+}
+
+.frente, .dorso {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 14px;
 }
 
 .dorso {
-  transform: rotateY(180deg);
+    background: black;
 }
 
-.carta.flip .frente {
-  transform: rotateY(180deg);
-}
-
-.carta.flip .dorso {
-  transform: rotateY(360deg);
-}
-
-.carta img {
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
+.frente {
+    transform: rotateY(180deg);
+    background-size: cover;
+    background-position: center;
 }
 
 button {
-  margin-top: 40px;
-  padding: 12px 30px;
-  border-radius: 25px;
-  border: none;
-  background: #e8c77a;
-  font-size: 18px;
-  cursor: pointer;
+    margin-top: 40px;
+    padding: 14px 40px;
+    border-radius: 40px;
+    border: none;
+    font-size: 18px;
+    background: #e5c27a;
+    color: #3a250f;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
 }
 
 .footer {
-  margin-top: 20px;
-  font-size: 14px;
-  opacity: 0.8;
+    margin-top: 30px;
+    font-size: 15px;
+    opacity: 0.8;
 }
 </style>
 </head>
@@ -92,21 +96,10 @@ button {
 <h1>Tarot Profundo</h1>
 <p>Elegí tres cartas y dejá que hablen.</p>
 
-<div class="cartas">
-  <div class="carta">
-    <div class="cara frente"></div>
-    <div class="cara dorso"><img></div>
-  </div>
-
-  <div class="carta">
-    <div class="cara frente"></div>
-    <div class="cara dorso"><img></div>
-  </div>
-
-  <div class="carta">
-    <div class="cara frente"></div>
-    <div class="cara dorso"><img></div>
-  </div>
+<div class="contenedor">
+    <div class="carta"><div class="carta-inner"><div class="dorso"></div><div class="frente" id="c1"></div></div></div>
+    <div class="carta"><div class="carta-inner"><div class="dorso"></div><div class="frente" id="c2"></div></div></div>
+    <div class="carta"><div class="carta-inner"><div class="dorso"></div><div class="frente" id="c3"></div></div></div>
 </div>
 
 <button onclick="nuevaTirada()">Nueva tirada</button>
@@ -141,26 +134,26 @@ const cartas = [
   "mundo.png"
 ];
 
-function mezclar(arr) {
-  return [...arr].sort(() => Math.random() - 0.5);
+function mezclar(array) {
+    return array.sort(() => Math.random() - 0.5);
 }
 
 function nuevaTirada() {
-  const cartasHTML = document.querySelectorAll(".carta");
-  const audio = document.getElementById("shuffle");
-  const seleccion = mezclar(cartas).slice(0, 3);
+    const audio = document.getElementById("shuffle");
+    audio.currentTime = 0;
+    audio.play();
 
-  audio.currentTime = 0;
-  audio.play();
+    const cartasHTML = document.querySelectorAll(".carta");
+    cartasHTML.forEach(c => c.classList.remove("volteada"));
 
-  cartasHTML.forEach((carta, i) => {
-    carta.classList.remove("flip");
+    const mezcla = mezclar([...cartas]).slice(0, 3);
 
-    setTimeout(() => {
-      carta.querySelector("img").src = "img/" + seleccion[i];
-      carta.classList.add("flip");
-    }, 400 + i * 500);
-  });
+    mezcla.forEach((img, i) => {
+        setTimeout(() => {
+            document.getElementById("c" + (i + 1)).style.backgroundImage = `url("img/${img}")`;
+            cartasHTML[i].classList.add("volteada");
+        }, 700 + i * 700);
+    });
 }
 </script>
 
