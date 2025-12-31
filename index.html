@@ -9,7 +9,7 @@
 <style>
 body {
   margin: 0;
-  font-family: 'Georgia', serif;
+  font-family: Georgia, serif;
   background: radial-gradient(circle at top, #4b2c5e, #2a143d);
   color: #f3e7c3;
   text-align: center;
@@ -20,7 +20,7 @@ h1 {
   font-size: 40px;
 }
 
-p.subtitle {
+.subtitle {
   font-size: 18px;
   opacity: 0.9;
 }
@@ -28,7 +28,7 @@ p.subtitle {
 .cards {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 22px;
   margin-top: 40px;
 }
 
@@ -38,19 +38,19 @@ p.subtitle {
   perspective: 1000px;
 }
 
-.card-inner {
+.inner {
   width: 100%;
   height: 100%;
   position: relative;
-  transition: transform 1s;
+  transition: transform 1s ease;
   transform-style: preserve-3d;
 }
 
-.card.flipped .card-inner {
+.card.flip .inner {
   transform: rotateY(180deg);
 }
 
-.card-face {
+.front, .back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -58,44 +58,40 @@ p.subtitle {
   backface-visibility: hidden;
 }
 
-.card-back {
+.back {
   background: black;
 }
 
-.card-front {
+.front {
   transform: rotateY(180deg);
 }
 
-.card img {
+.front img {
   width: 100%;
   height: 100%;
   border-radius: 14px;
 }
 
 button {
-  margin-top: 40px;
-  padding: 14px 30px;
+  margin: 40px auto;
+  padding: 14px 34px;
+  font-size: 18px;
   border-radius: 30px;
   border: none;
-  font-size: 18px;
   background: #e6c88c;
   color: #3b2b15;
   cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.9;
 }
 
 #lectura {
   max-width: 600px;
   margin: 30px auto;
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .footer {
-  margin: 30px 0;
+  margin-bottom: 40px;
   opacity: 0.8;
 }
 </style>
@@ -107,9 +103,9 @@ button:hover {
 <p class="subtitle">Elegí tres cartas y dejá que hablen.</p>
 
 <div class="cards">
-  <div class="card"><div class="card-inner"><div class="card-face card-back"></div><div class="card-face card-front"><img></div></div></div>
-  <div class="card"><div class="card-inner"><div class="card-face card-back"></div><div class="card-face card-front"><img></div></div></div>
-  <div class="card"><div class="card-inner"><div class="card-face card-back"></div><div class="card-face card-front"><img></div></div></div>
+  <div class="card"><div class="inner"><div class="back"></div><div class="front"><img></div></div></div>
+  <div class="card"><div class="inner"><div class="back"></div><div class="front"><img></div></div></div>
+  <div class="card"><div class="inner"><div class="back"></div><div class="front"><img></div></div></div>
 </div>
 
 <button onclick="nuevaTirada()">Nueva tirada</button>
@@ -122,27 +118,27 @@ button:hover {
 
 <script>
 const cartas = [
-  {img:"loco.png", texto:"El Loco habla de un salto al vacío. No esperes seguridad: confiá."},
-  {img:"mago.png", texto:"El Mago recuerda que ya tenés todo lo necesario."},
-  {img:"sacerdotisa.png", texto:"La Sacerdotisa pide silencio. Escuchá tu intuición."},
-  {img:"emperatriz.png", texto:"La Emperatriz trae creación, placer y expansión."},
-  {img:"emperador.png", texto:"El Emperador pide orden y decisión."},
-  {img:"hierofante.png", texto:"El Hierofante señala aprendizaje profundo."},
-  {img:"enamorados.png", texto:"Los Enamorados hablan de una elección real."},
-  {img:"carro.png", texto:"El Carro avanza. No frenes ahora."},
-  {img:"fuerza.png", texto:"La Fuerza domina sin violencia."},
-  {img:"ermitaño.png", texto:"El Ermitaño pide pausa y verdad interna."},
-  {img:"rueda.png", texto:"La Rueda gira. Todo cambia."},
-  {img:"justicia.png", texto:"La Justicia exige honestidad."},
-  {img:"colgado.png", texto:"El Colgado te pide soltar el control."},
-  {img:"muerte.png", texto:"La Muerte transforma. No temas."},
-  {img:"templanza.png", texto:"La Templanza armoniza."},
-  {img:"diablo.png", texto:"El Diablo muestra ataduras invisibles."},
+  {img:"loco.png", texto:"El Loco te invita a dar un salto sin garantías."},
+  {img:"mago.png", texto:"El Mago te recuerda que ya tenés todo para crear."},
+  {img:"sacerdotisa.png", texto:"La Sacerdotisa guarda respuestas que llegan en silencio."},
+  {img:"emperatriz.png", texto:"La Emperatriz nutre lo que está por crecer."},
+  {img:"emperador.png", texto:"El Emperador pide orden, estructura y decisión."},
+  {img:"hierofante.png", texto:"El Hierofante enseña desde la experiencia vivida."},
+  {img:"enamorados.png", texto:"Los Enamorados hablan de una elección verdadera."},
+  {img:"carro.png", texto:"El Carro avanza con determinación."},
+  {img:"fuerza.png", texto:"La Fuerza doma sin violencia."},
+  {img:"ermitaño.png", texto:"El Ermitaño busca claridad interior."},
+  {img:"rueda.png", texto:"La Rueda anuncia movimiento inevitable."},
+  {img:"justicia.png", texto:"La Justicia equilibra lo pendiente."},
+  {img:"colgado.png", texto:"El Colgado pide cambiar la mirada."},
+  {img:"muerte.png", texto:"La Muerte transforma para renacer."},
+  {img:"templanza.png", texto:"La Templanza armoniza opuestos."},
+  {img:"diablo.png", texto:"El Diablo muestra apegos inconscientes."},
   {img:"torre.png", texto:"La Torre rompe lo falso."},
   {img:"estrella.png", texto:"La Estrella devuelve la fe."},
   {img:"luna.png", texto:"La Luna revela lo oculto."},
-  {img:"sol.png", texto:"El Sol ilumina y da claridad."},
-  {img:"juicio.png", texto:"El Juicio despierta tu verdad."},
+  {img:"sol.png", texto:"El Sol ilumina sin miedo."},
+  {img:"juicio.png", texto:"El Juicio despierta la verdad."},
   {img:"mundo.png", texto:"El Mundo cierra un ciclo completo."}
 ];
 
@@ -159,20 +155,20 @@ function nuevaTirada() {
   audio.currentTime = 0;
   audio.play();
 
-  cards.forEach(c => c.classList.remove("flipped"));
+  cards.forEach(c => c.classList.remove("flip"));
 
-  const seleccion = mezclar(cartas).slice(0,3);
+  const seleccion = mezclar(cartas).slice(0, 3);
 
   seleccion.forEach((carta, i) => {
     setTimeout(() => {
       const card = cards[i];
       card.querySelector("img").src = "img/" + carta.img;
-      card.classList.add("flipped");
+      card.classList.add("flip");
 
       const p = document.createElement("p");
-      p.innerText = carta.texto;
+      p.textContent = carta.texto;
       lectura.appendChild(p);
-    }, 800 * (i + 1));
+    }, 700 * (i + 1));
   });
 }
 </script>
