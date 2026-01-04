@@ -174,8 +174,10 @@ function mezclar(array) {
 
 function nuevaTirada() {
   const audio = document.getElementById("shuffle");
-  audio.currentTime = 0;
-  audio.play();
+  audio.pause();
+audio.currentTime = 0;
+audio.load();
+audio.play().catch(() => {});
 
   const seleccion = mezclar(cartas).slice(0,3);
   const cards = document.querySelectorAll(".card");
