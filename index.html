@@ -20,13 +20,13 @@ h2 { font-weight: normal; margin-bottom: 40px; }
 .cards {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 24px;
 }
 
 .card {
   width: 180px;
   height: 320px;
-  perspective: 1000px;
+  perspective: 1200px;
 }
 
 .card-inner {
@@ -34,10 +34,12 @@ h2 { font-weight: normal; margin-bottom: 40px; }
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.8s;
+  transition: transform 0.8s ease;
 }
 
-.card.flip .card-inner { transform: rotateY(180deg); }
+.card.flip .card-inner {
+  transform: rotateY(180deg);
+}
 
 .face {
   position: absolute;
@@ -49,8 +51,13 @@ h2 { font-weight: normal; margin-bottom: 40px; }
   background-position: center;
 }
 
-.back { background: #000; }
-.front { transform: rotateY(180deg); }
+.back {
+  background: linear-gradient(135deg, #2a143f, #000);
+}
+
+.front {
+  transform: rotateY(180deg);
+}
 
 button {
   margin: 40px auto 20px;
@@ -63,7 +70,7 @@ button {
 }
 
 .prediction {
-  max-width: 700px;
+  max-width: 720px;
   margin: 20px auto 40px;
   font-size: 20px;
   line-height: 1.6;
@@ -74,7 +81,7 @@ button {
 <body>
 
 <h1>Tarot Profundo</h1>
-<h2>Elegí tres cartas y dejá que hablen.</h2>
+<h2>Dejá que las cartas hablen.</h2>
 
 <div class="cards">
   <div class="card"><div class="card-inner"><div class="face back"></div><div class="face front" id="c1"></div></div></div>
@@ -106,7 +113,7 @@ const cartas = [
       "El poder ya está en tus manos."
     ]
   },
-  { nombre:"La Sacerdotisa", img:"sacerdotisa.png", textos:["Escuchá. No apures."] },
+  { nombre:"La Sacerdotisa", img:"sacerdotisa.png", textos:["Escuchá antes de actuar."] },
   { nombre:"La Emperatriz", img:"emperatriz.png", textos:["Algo está creciendo."] },
   { nombre:"El Emperador", img:"emperador.png", textos:["Poné orden."] },
   { nombre:"El Hierofante", img:"hierofante.png", textos:["Hay algo para aprender."] },
@@ -142,14 +149,16 @@ function nuevaTirada() {
     c.classList.remove("flip");
     const front = document.getElementById("c"+(i+1));
     front.style.backgroundImage = "";
+
     setTimeout(()=>{
       front.style.backgroundImage = `url('img/${seleccion[i].img}')`;
       c.classList.add("flip");
+
       const frase = seleccion[i].textos[
         Math.floor(Math.random()*seleccion[i].textos.length)
       ];
       texto.innerHTML += `<p><strong>${seleccion[i].nombre}:</strong> ${frase}</p>`;
-    }, i*600);
+    }, 300 + i*600);
   });
 }
 </script>
