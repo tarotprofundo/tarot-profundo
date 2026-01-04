@@ -3,15 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
 <title>Tarot Profundo</title>
 
 <style>
 body {
   margin: 0;
   font-family: Georgia, serif;
-  background: linear-gradient(180deg, #3b1d5a, #2b1443);
-  color: #f3e7c8;
+  background: radial-gradient(circle at top, #4b2a6b, #2a143f);
+  color: #f3e7c3;
   text-align: center;
 }
 
@@ -22,80 +21,71 @@ h1 {
 
 h2 {
   font-weight: normal;
-  opacity: 0.9;
+  margin-bottom: 40px;
 }
 
 .cards {
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin: 40px 0;
 }
 
 .card {
   width: 180px;
-  height: 300px;
+  height: 320px;
   perspective: 1000px;
 }
 
 .card-inner {
   width: 100%;
   height: 100%;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
   position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s;
 }
 
 .card.flip .card-inner {
   transform: rotateY(180deg);
 }
 
-.card-front,
-.card-back {
+.face {
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  border-radius: 12px;
-  overflow: hidden;
+  border-radius: 14px;
 }
 
-.card-front {
+.back {
   background: #000;
 }
 
-.card-front img,
-.card-back img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.card-back {
+.front {
   transform: rotateY(180deg);
+  background-size: cover;
+  background-position: center;
 }
 
 button {
-  padding: 14px 28px;
+  margin: 40px auto 20px;
+  padding: 14px 40px;
+  font-size: 18px;
   border-radius: 30px;
   border: none;
   background: #e7c97a;
-  font-size: 18px;
+  color: #2a143f;
   cursor: pointer;
-  margin-top: 20px;
 }
 
-.texto {
-  margin-top: 30px;
+.prediction {
+  max-width: 700px;
+  margin: 20px auto 40px;
   font-size: 20px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .footer {
-  margin: 30px 0;
+  margin-bottom: 30px;
   opacity: 0.8;
 }
 </style>
@@ -107,25 +97,14 @@ button {
 <h2>Elegí tres cartas y dejá que hablen.</h2>
 
 <div class="cards">
-  <div class="card"><div class="card-inner">
-    <div class="card-front"></div>
-    <div class="card-back"><img></div>
-  </div></div>
-
-  <div class="card"><div class="card-inner">
-    <div class="card-front"></div>
-    <div class="card-back"><img></div>
-  </div></div>
-
-  <div class="card"><div class="card-inner">
-    <div class="card-front"></div>
-    <div class="card-back"><img></div>
-  </div></div>
+  <div class="card"><div class="card-inner"><div class="face back"></div><div class="face front" id="c1"></div></div></div>
+  <div class="card"><div class="card-inner"><div class="face back"></div><div class="face front" id="c2"></div></div></div>
+  <div class="card"><div class="card-inner"><div class="face back"></div><div class="face front" id="c3"></div></div></div>
 </div>
 
 <button onclick="nuevaTirada()">Nueva tirada</button>
 
-<div class="texto" id="texto"></div>
+<div class="prediction" id="texto"></div>
 
 <div class="footer">✨ Escuchá lo que tu alma ya sabe ✨</div>
 
@@ -133,28 +112,60 @@ button {
 
 <script>
 const cartas = [
-  { img:"loco.png", texto:"El Loco habla de un salto al vacío. Confiá." },
-  { img:"mago.png", texto:"El Mago recuerda que ya tenés todo." },
-  { img:"sacerdotisa.png", texto:"La Sacerdotisa pide silencio y escucha." },
-  { img:"emperatriz.png", texto:"La Emperatriz crea y nutre." },
-  { img:"emperador.png", texto:"El Emperador ordena lo que estaba disperso." },
-  { img:"hierofante.png", texto:"El Hierofante trae enseñanza profunda." },
-  { img:"enamorados.png", texto:"Los Enamorados hablan de elección." },
-  { img:"carro.png", texto:"El Carro avanza sin miedo." },
-  { img:"fuerza.png", texto:"La Fuerza domina sin violencia." },
-  { img:"ermitano.png", texto:"El Ermitaño ilumina desde adentro." },
-  { img:"rueda.png", texto:"La Rueda anuncia cambio." },
-  { img:"justicia.png", texto:"La Justicia equilibra." },
-  { img:"colgado.png", texto:"El Colgado pide soltar." },
-  { img:"muerte.png", texto:"La Muerte transforma." },
-  { img:"templanza.png", texto:"La Templanza armoniza." },
-  { img:"diablo.png", texto:"El Diablo muestra el apego." },
-  { img:"torre.png", texto:"La Torre derrumba lo falso." },
-  { img:"estrella.png", texto:"La Estrella devuelve la fe." },
-  { img:"luna.png", texto:"La Luna revela lo oculto." },
-  { img:"sol.png", texto:"El Sol ilumina todo." },
-  { img:"juicio.png", texto:"El Juicio despierta." },
-  { img:"mundo.png", texto:"El Mundo cierra el ciclo." }
+  {
+    nombre: "El Loco",
+    img: "loco.png",
+    textos: [
+      "No esperes seguridad. Saltá.",
+      "El miedo no es señal de freno, es señal de movimiento.",
+      "Esto empieza cuando dejás de calcular."
+    ]
+  },
+  {
+    nombre: "El Mago",
+    img: "mago.png",
+    textos: [
+      "Tenés todo. Usalo.",
+      "No esperes permiso.",
+      "El poder ya está en tus manos."
+    ]
+  },
+  {
+    nombre: "La Sacerdotisa",
+    img: "sacerdotisa.png",
+    textos: [
+      "La respuesta ya está. No insistas.",
+      "Esto se entiende en silencio.",
+      "No actúes todavía."
+    ]
+  },
+  {
+    nombre: "La Emperatriz",
+    img: "emperatriz.png",
+    textos: [
+      "Algo está creciendo.",
+      "Cuidá lo que estás gestando.",
+      "No fuerces el ritmo."
+    ]
+  },
+  {
+    nombre: "El Emperador",
+    img: "emperador.png",
+    textos: [
+      "Poné orden.",
+      "Tomá el control.",
+      "Alguien tiene que decidir, y sos vos."
+    ]
+  },
+  {
+    nombre: "El Ermitaño",
+    img: "ermitano.png",
+    textos: [
+      "Alejarte ahora es claridad.",
+      "No todos merecen acceso.",
+      "Buscá adentro."
+    ]
+  }
 ];
 
 function mezclar(array) {
@@ -162,22 +173,28 @@ function mezclar(array) {
 }
 
 function nuevaTirada() {
-  const seleccion = mezclar(cartas).slice(0, 3);
+  const audio = document.getElementById("shuffle");
+  audio.currentTime = 0;
+  audio.play();
+
+  const seleccion = mezclar(cartas).slice(0,3);
   const cards = document.querySelectorAll(".card");
   const texto = document.getElementById("texto");
-  const sonido = document.getElementById("shuffle");
 
   texto.innerHTML = "";
-  sonido.currentTime = 0;
-  sonido.play();
 
-  cards.forEach((card, i) => {
-    card.classList.remove("flip");
+  cards.forEach((c, i) => {
+    c.classList.remove("flip");
+    const front = document.getElementById("c"+(i+1));
+    front.style.backgroundImage = "";
     setTimeout(() => {
-      card.querySelector("img").src = "img/" + seleccion[i].img;
-      card.classList.add("flip");
-      texto.innerHTML += `<p>${seleccion[i].texto}</p>`;
-    }, i * 600);
+      front.style.backgroundImage = `url('img/${seleccion[i].img}')`;
+      c.classList.add("flip");
+      const frase = seleccion[i].textos[
+        Math.floor(Math.random() * seleccion[i].textos.length)
+      ];
+      texto.innerHTML += `<p><strong>${seleccion[i].nombre}:</strong> ${frase}</p>`;
+    }, 600 + i * 600);
   });
 }
 </script>
