@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tarot Profundo</title>
 
 <style>
@@ -14,8 +14,8 @@ body {
   text-align: center;
 }
 
-h1 { margin-top: 30px; font-size: 42px; }
-h2 { font-weight: normal; margin-bottom: 40px; }
+h1 { margin-top: 30px; font-size: 40px; }
+h2 { font-weight: normal; margin-bottom: 30px; }
 
 .cards {
   display: flex;
@@ -60,8 +60,8 @@ h2 { font-weight: normal; margin-bottom: 40px; }
 }
 
 button {
-  margin: 40px auto 20px;
-  padding: 14px 40px;
+  margin: 35px auto 20px;
+  padding: 14px 36px;
   font-size: 18px;
   border-radius: 30px;
   border: none;
@@ -100,8 +100,8 @@ const cartas = [
     img:"loco.png",
     textos:[
       "No esperes seguridad. Saltá.",
-      "El miedo no es freno, es movimiento.",
-      "Esto empieza cuando dejás de calcular."
+      "Esto no se piensa, se hace.",
+      "El salto ya está hecho."
     ]
   },
   {
@@ -111,65 +111,72 @@ const cartas = [
       "Tenés todas las herramientas. Usalas.",
       "No esperes permiso.",
       "El poder ya está en tus manos."
-    ] 
-    {
-  nombre: "La Sacerdotisa",
-  img: "sacerdotisa.png",
-  textos: [
-    "No hables. Observá. Todavía falta información.",
-    "Tu intuición ya sabe la respuesta. Vos la estás tapando.",
-    "No es momento de actuar, es momento de entender.",
-    "Si apurás esto, lo arruinás.",
-    "Guardá silencio y mirá mejor.",
-    "La verdad aparece cuando dejás de buscar afuera."
-  ]
+    ]
   },
-  { nombre:"La Sacerdotisa", img:"sacerdotisa.png", textos:["Escuchá antes de actuar."] },
-  { nombre:"La Emperatriz", img:"emperatriz.png", textos:["Algo está creciendo."] },
-  { nombre:"El Emperador", img:"emperador.png", textos:["Poné orden."] },
-  { nombre:"El Hierofante", img:"hierofante.png", textos:["Hay algo para aprender."] },
-  { nombre:"Los Enamorados", img:"enamorados.png", textos:["Elegí con honestidad."] },
-  { nombre:"El Carro", img:"carro.png", textos:["Avanzá sin dudar."] },
-  { nombre:"La Fuerza", img:"fuerza.png", textos:["Dominá sin imponer."] },
-  { nombre:"El Ermitaño", img:"ermitano.png", textos:["Buscá adentro."] },
-  { nombre:"La Rueda", img:"rueda.png", textos:["Todo cambia."] },
-  { nombre:"La Justicia", img:"justicia.png", textos:["Poné las cosas en su lugar."] },
-  { nombre:"El Colgado", img:"colgado.png", textos:["Soltá el control."] },
-  { nombre:"La Muerte", img:"muerte.png", textos:["Transformación necesaria."] },
-  { nombre:"La Templanza", img:"templanza.png", textos:["Equilibrá extremos."] },
-  { nombre:"El Diablo", img:"diablo.png", textos:["Revisá tus ataduras."] },
-  { nombre:"La Torre", img:"torre.png", textos:["Lo falso cae."] },
-  { nombre:"La Estrella", img:"estrella.png", textos:["Recuperá la fe."] },
-  { nombre:"La Luna", img:"luna.png", textos:["No todo es lo que parece."] },
-  { nombre:"El Sol", img:"sol.png", textos:["Claridad total."] },
-  { nombre:"El Juicio", img:"juicio.png", textos:["Despertar inevitable."] },
-  { nombre:"El Mundo", img:"mundo.png", textos:["Cierre de ciclo."] }
+  {
+    nombre:"La Sacerdotisa",
+    img:"sacerdotisa.png",
+    textos:[
+      "No actúes todavía.",
+      "Hay información que no estás viendo.",
+      "Escuchá más de lo que hablás."
+    ]
+  },
+  {
+    nombre:"La Emperatriz",
+    img:"emperatriz.png",
+    textos:[
+      "Algo está creciendo.",
+      "Cuidá lo que estás gestando.",
+      "No fuerces el ritmo."
+    ]
+  },
+  {
+    nombre:"El Emperador",
+    img:"emperador.png",
+    textos:[
+      "Poné orden.",
+      "Hacete cargo.",
+      "Tomá el control."
+    ]
+  },
+  {
+    nombre:"El Ermitaño",
+    img:"ermitano.png",
+    textos:[
+      "Frená.",
+      "Buscá la respuesta adentro.",
+      "No mires afuera."
+    ]
+  }
 ];
 
-function mezclar(arr) {
-  return [...arr].sort(() => Math.random() - 0.5);
+function mezclar(array) {
+  return [...array].sort(() => Math.random() - 0.5);
 }
 
 function nuevaTirada() {
   const seleccion = mezclar(cartas).slice(0,3);
   const cards = document.querySelectorAll(".card");
   const texto = document.getElementById("texto");
+
   texto.innerHTML = "";
 
-  cards.forEach((c,i)=>{
-    c.classList.remove("flip");
-    const front = document.getElementById("c"+(i+1));
+  cards.forEach((card, i) => {
+    card.classList.remove("flip");
+    const front = document.getElementById("c" + (i + 1));
     front.style.backgroundImage = "";
 
-    setTimeout(()=>{
+    setTimeout(() => {
       front.style.backgroundImage = `url('img/${seleccion[i].img}')`;
-      c.classList.add("flip");
+      card.classList.add("flip");
 
       const frase = seleccion[i].textos[
-        Math.floor(Math.random()*seleccion[i].textos.length)
+        Math.floor(Math.random() * seleccion[i].textos.length)
       ];
+
       texto.innerHTML += `<p><strong>${seleccion[i].nombre}:</strong> ${frase}</p>`;
-    }, 300 + i*600);
+    }, 300 + i * 600);
   });
 }
 </script>
