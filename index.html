@@ -13,52 +13,26 @@ body {
   color: #f3e7c3;
   text-align: center;
 }
-
 h1 { margin-top: 30px; font-size: 40px; }
 h2 { font-weight: normal; margin-bottom: 30px; }
-
-.cards {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-}
-
-.card {
-  width: 180px;
-  height: 320px;
-  perspective: 1200px;
-}
-
+.cards { display: flex; justify-content: center; gap: 24px; }
+.card { width: 180px; height: 320px; perspective: 1200px; }
 .card-inner {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.8s ease;
 }
-
-.card.flip .card-inner {
-  transform: rotateY(180deg);
-}
-
+.card.flip .card-inner { transform: rotateY(180deg); }
 .face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  position: absolute; width: 100%; height: 100%;
   backface-visibility: hidden;
   border-radius: 14px;
   background-size: cover;
   background-position: center;
 }
-
-.back {
-  background: linear-gradient(135deg, #2a143f, #000);
-}
-
-.front {
-  transform: rotateY(180deg);
-}
-
+.back { background: linear-gradient(135deg, #2a143f, #000); }
+.front { transform: rotateY(180deg); }
 button {
   margin: 35px auto 20px;
   padding: 14px 36px;
@@ -68,9 +42,8 @@ button {
   background: #e7c97a;
   cursor: pointer;
 }
-
 .prediction {
-  max-width: 720px;
+  max-width: 760px;
   margin: 20px auto 40px;
   font-size: 20px;
   line-height: 1.6;
@@ -90,93 +63,162 @@ button {
 </div>
 
 <button onclick="nuevaTirada()">Nueva tirada</button>
-
 <div class="prediction" id="texto"></div>
 
 <script>
 const cartas = [
-  {
-    nombre:"El Loco",
-    img:"loco.png",
-    textos:[
-      "No esperes seguridad. Saltá.",
-      "Esto no se piensa, se hace.",
-      "El salto ya está hecho."
-    ]
-  },
-  {
-    nombre:"El Mago",
-    img:"mago.png",
-    textos:[
-      "Tenés todas las herramientas. Usalas.",
-      "No esperes permiso.",
-      "El poder ya está en tus manos."
-    ]
-  },
-  {
-    nombre:"La Sacerdotisa",
-    img:"sacerdotisa.png",
-    textos:[
-      "No actúes todavía.",
-      "Hay información que no estás viendo.",
-      "Escuchá más de lo que hablás."
-    ]
-  },
-  {
-    nombre:"La Emperatriz",
-    img:"emperatriz.png",
-    textos:[
-      "Algo está creciendo.",
-      "Cuidá lo que estás gestando.",
-      "No fuerces el ritmo."
-    ]
-  },
-  {
-    nombre:"El Emperador",
-    img:"emperador.png",
-    textos:[
-      "Poné orden.",
-      "Hacete cargo.",
-      "Tomá el control."
-    ]
-  },
-  {
-    nombre:"El Ermitaño",
-    img:"ermitano.png",
-    textos:[
-      "Frená.",
-      "Buscá la respuesta adentro.",
-      "No mires afuera."
-    ]
-  }
+
+{nombre:"El Loco",img:"loco.png",textos:[
+"No esperes seguridad. Esto arranca cuando te animás a dar el paso.",
+"Si seguís esperando estar listo, no pasa nada.",
+"El riesgo es parte del camino. Evitarlo también es una elección."
+]},
+
+{nombre:"El Mago",img:"mago.png",textos:[
+"Tenés todo lo que necesitás. Lo que falta es que empieces.",
+"No es un problema de capacidad, es de decisión.",
+"Si no usás lo que sabés, se pierde."
+]},
+
+{nombre:"La Sacerdotisa",img:"sacerdotisa.png",textos:[
+"No hables todavía. Observá.",
+"Hay información que no estás viendo porque estás apurado.",
+"La respuesta no está afuera. Está en lo que intuís y evitás."
+]},
+
+{nombre:"La Emperatriz",img:"emperatriz.png",textos:[
+"Algo está creciendo, aunque todavía no se vea.",
+"Cuidá lo que estás gestando. No lo expongas antes de tiempo.",
+"No fuerces procesos que necesitan madurar."
+]},
+
+{nombre:"El Emperador",img:"emperador.png",textos:[
+"Poné orden antes de seguir avanzando.",
+"Hacete cargo del rol que estás evitando.",
+"Sin estructura, esto no se sostiene."
+]},
+
+{nombre:"El Hierofante",img:"hierofante.png",textos:[
+"No todo se inventa de nuevo. Escuchá a quien sabe.",
+"Hay una enseñanza clara que estás pasando por alto.",
+"Aceptar guía no es debilidad."
+]},
+
+{nombre:"Los Enamorados",img:"enamorados.png",textos:[
+"Tenés que elegir, aunque no te guste perder una opción.",
+"Postergar la decisión también es una decisión.",
+"Elegí desde la honestidad, no desde el miedo."
+]},
+
+{nombre:"El Carro",img:"carro.png",textos:[
+"Avanzá con determinación.",
+"No mires para atrás buscando aprobación.",
+"Esto se gana empujando, no dudando."
+]},
+
+{nombre:"La Fuerza",img:"fuerza.png",textos:[
+"No hace falta imponerse para tener control.",
+"Dominá el impulso antes de actuar.",
+"La verdadera fuerza es interna."
+]},
+
+{nombre:"El Ermitaño",img:"ermitano.png",textos:[
+"Frená. No es momento de ruido.",
+"La respuesta aparece cuando te alejás del afuera.",
+"No todos los caminos se recorren acompañado."
+]},
+
+{nombre:"La Rueda de la Fortuna",img:"rueda.png",textos:[
+"Esto está cambiando, quieras o no.",
+"No intentes controlar lo que ya se está moviendo.",
+"Aprovechá el momento antes de que gire otra vez."
+]},
+
+{nombre:"La Justicia",img:"justicia.png",textos:[
+"Todo tiene consecuencia, incluso lo que evitás.",
+"Hacete cargo de lo que te toca.",
+"No hay atajos sin costo."
+]},
+
+{nombre:"El Colgado",img:"colgado.png",textos:[
+"Soltá el control.",
+"Mirá la situación desde otro ángulo.",
+"Forzar ahora empeora todo."
+]},
+
+{nombre:"La Muerte",img:"muerte.png",textos:[
+"Esto se terminó, aunque te cueste aceptarlo.",
+"Soltar duele menos que arrastrar.",
+"El cierre es necesario para avanzar."
+]},
+
+{nombre:"La Templanza",img:"templanza.png",textos:[
+"Buscá equilibrio, no extremos.",
+"No todo es blanco o negro.",
+"Dosificar es clave ahora."
+]},
+
+{nombre:"El Diablo",img:"diablo.png",textos:[
+"Hay una atadura que te condiciona.",
+"No confundas deseo con necesidad.",
+"Revisá qué te está manejando."
+]},
+
+{nombre:"La Torre",img:"torre.png",textos:[
+"Lo que no es real se cae.",
+"No intentes sostener lo insostenible.",
+"El derrumbe libera espacio."
+]},
+
+{nombre:"La Estrella",img:"estrella.png",textos:[
+"Hay una salida, aunque ahora no la veas.",
+"La calma vuelve si dejás de resistir.",
+"Confiar otra vez es parte del proceso."
+]},
+
+{nombre:"La Luna",img:"luna.png",textos:[
+"No todo es como parece.",
+"Ojo con el autoengaño.",
+"Esperá claridad antes de decidir."
+]},
+
+{nombre:"El Sol",img:"sol.png",textos:[
+"Las cosas se muestran con claridad.",
+"Momento de disfrute y verdad.",
+"No te escondas más."
+]},
+
+{nombre:"El Juicio",img:"juicio.png",textos:[
+"Hay un llamado que no podés seguir ignorando.",
+"Despertar implica hacerse cargo.",
+"Esto te empuja a decidir."
+]},
+
+{nombre:"El Mundo",img:"mundo.png",textos:[
+"Cierre de etapa logrado.",
+"Lo que empezaste se completa.",
+"Estás listo para otra fase."
+]}
+
 ];
 
-function mezclar(array) {
-  return [...array].sort(() => Math.random() - 0.5);
-}
+function mezclar(arr){return [...arr].sort(()=>Math.random()-0.5);}
 
-function nuevaTirada() {
-  const seleccion = mezclar(cartas).slice(0,3);
+function nuevaTirada(){
+  const sel = mezclar(cartas).slice(0,3);
   const cards = document.querySelectorAll(".card");
   const texto = document.getElementById("texto");
-
-  texto.innerHTML = "";
-
-  cards.forEach((card, i) => {
-    card.classList.remove("flip");
-    const front = document.getElementById("c" + (i + 1));
-    front.style.backgroundImage = "";
-
-    setTimeout(() => {
-      front.style.backgroundImage = `url('img/${seleccion[i].img}')`;
-      card.classList.add("flip");
-
-      const frase = seleccion[i].textos[
-        Math.floor(Math.random() * seleccion[i].textos.length)
-      ];
-
-      texto.innerHTML += `<p><strong>${seleccion[i].nombre}:</strong> ${frase}</p>`;
-    }, 300 + i * 600);
+  texto.innerHTML="";
+  cards.forEach((c,i)=>{
+    c.classList.remove("flip");
+    const front=document.getElementById("c"+(i+1));
+    front.style.backgroundImage="";
+    setTimeout(()=>{
+      front.style.backgroundImage=`url('img/${sel[i].img}')`;
+      c.classList.add("flip");
+      const frase=sel[i].textos[Math.floor(Math.random()*sel[i].textos.length)];
+      texto.innerHTML+=`<p><strong>${sel[i].nombre}:</strong> ${frase}</p>`;
+    },300+i*600);
   });
 }
 </script>
