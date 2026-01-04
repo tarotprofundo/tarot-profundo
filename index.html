@@ -14,15 +14,8 @@ body {
   text-align: center;
 }
 
-h1 {
-  margin-top: 30px;
-  font-size: 42px;
-}
-
-h2 {
-  font-weight: normal;
-  margin-bottom: 40px;
-}
+h1 { margin-top: 30px; font-size: 42px; }
+h2 { font-weight: normal; margin-bottom: 40px; }
 
 .cards {
   display: flex;
@@ -44,9 +37,7 @@ h2 {
   transition: transform 0.8s;
 }
 
-.card.flip .card-inner {
-  transform: rotateY(180deg);
-}
+.card.flip .card-inner { transform: rotateY(180deg); }
 
 .face {
   position: absolute;
@@ -54,17 +45,12 @@ h2 {
   height: 100%;
   backface-visibility: hidden;
   border-radius: 14px;
-}
-
-.back {
-  background: #000;
-}
-
-.front {
-  transform: rotateY(180deg);
   background-size: cover;
   background-position: center;
 }
+
+.back { background: #000; }
+.front { transform: rotateY(180deg); }
 
 button {
   margin: 40px auto 20px;
@@ -73,7 +59,6 @@ button {
   border-radius: 30px;
   border: none;
   background: #e7c97a;
-  color: #2a143f;
   cursor: pointer;
 }
 
@@ -82,11 +67,6 @@ button {
   margin: 20px auto 40px;
   font-size: 20px;
   line-height: 1.6;
-}
-
-.footer {
-  margin-bottom: 30px;
-  opacity: 0.8;
 }
 </style>
 </head>
@@ -106,103 +86,70 @@ button {
 
 <div class="prediction" id="texto"></div>
 
-<div class="footer">✨ Escuchá lo que tu alma ya sabe ✨</div>
-
-<audio id="shuffle" src="img/shuffle.mp3"></audio>
-
 <script>
 const cartas = [
   {
-    nombre: "El Loco",
-    img: "loco.png",
-    textos: [
+    nombre:"El Loco",
+    img:"loco.png",
+    textos:[
       "No esperes seguridad. Saltá.",
-      "El miedo no es señal de freno, es señal de movimiento.",
+      "El miedo no es freno, es movimiento.",
       "Esto empieza cuando dejás de calcular."
     ]
   },
   {
-{
-  nombre: "El Mago",
-  img: "mago.png",
-  textos: [
-    "Tenés todas las herramientas. Lo que falta es que empieces.",
-    "Dejá de esperar condiciones ideales. Ya podés hacerlo.",
-    "El poder no está afuera. Está en lo que hacés con lo que tenés.",
-    "No es falta de capacidad. Es falta de decisión.",
-    "Si no usás lo que sabés, se pierde.",
-    "Este es un momento de acción concreta, no de ideas sueltas.",
-    "El Mago no duda: prueba.",
-    "Mostrá lo que sabés hacer, aunque no esté perfecto."
-  ]
-},
-  {
-    nombre: "La Sacerdotisa",
-    img: "sacerdotisa.png",
-    textos: [
-      "La respuesta ya está. No insistas.",
-      "Esto se entiende en silencio.",
-      "No actúes todavía."
+    nombre:"El Mago",
+    img:"mago.png",
+    textos:[
+      "Tenés todas las herramientas. Usalas.",
+      "No esperes permiso.",
+      "El poder ya está en tus manos."
     ]
   },
-  {
-    nombre: "La Emperatriz",
-    img: "emperatriz.png",
-    textos: [
-      "Algo está creciendo.",
-      "Cuidá lo que estás gestando.",
-      "No fuerces el ritmo."
-    ]
-  },
-  {
-    nombre: "El Emperador",
-    img: "emperador.png",
-    textos: [
-      "Poné orden.",
-      "Tomá el control.",
-      "Alguien tiene que decidir, y sos vos."
-    ]
-  },
-  {
-    nombre: "El Ermitaño",
-    img: "ermitano.png",
-    textos: [
-      "Alejarte ahora es claridad.",
-      "No todos merecen acceso.",
-      "Buscá adentro."
-    ]
-  }
+  { nombre:"La Sacerdotisa", img:"sacerdotisa.png", textos:["Escuchá. No apures."] },
+  { nombre:"La Emperatriz", img:"emperatriz.png", textos:["Algo está creciendo."] },
+  { nombre:"El Emperador", img:"emperador.png", textos:["Poné orden."] },
+  { nombre:"El Hierofante", img:"hierofante.png", textos:["Hay algo para aprender."] },
+  { nombre:"Los Enamorados", img:"enamorados.png", textos:["Elegí con honestidad."] },
+  { nombre:"El Carro", img:"carro.png", textos:["Avanzá sin dudar."] },
+  { nombre:"La Fuerza", img:"fuerza.png", textos:["Dominá sin imponer."] },
+  { nombre:"El Ermitaño", img:"ermitano.png", textos:["Buscá adentro."] },
+  { nombre:"La Rueda", img:"rueda.png", textos:["Todo cambia."] },
+  { nombre:"La Justicia", img:"justicia.png", textos:["Poné las cosas en su lugar."] },
+  { nombre:"El Colgado", img:"colgado.png", textos:["Soltá el control."] },
+  { nombre:"La Muerte", img:"muerte.png", textos:["Transformación necesaria."] },
+  { nombre:"La Templanza", img:"templanza.png", textos:["Equilibrá extremos."] },
+  { nombre:"El Diablo", img:"diablo.png", textos:["Revisá tus ataduras."] },
+  { nombre:"La Torre", img:"torre.png", textos:["Lo falso cae."] },
+  { nombre:"La Estrella", img:"estrella.png", textos:["Recuperá la fe."] },
+  { nombre:"La Luna", img:"luna.png", textos:["No todo es lo que parece."] },
+  { nombre:"El Sol", img:"sol.png", textos:["Claridad total."] },
+  { nombre:"El Juicio", img:"juicio.png", textos:["Despertar inevitable."] },
+  { nombre:"El Mundo", img:"mundo.png", textos:["Cierre de ciclo."] }
 ];
 
-function mezclar(array) {
-  return [...array].sort(() => Math.random() - 0.5);
+function mezclar(arr) {
+  return [...arr].sort(() => Math.random() - 0.5);
 }
 
 function nuevaTirada() {
-  const audio = document.getElementById("shuffle");
-  audio.pause();
-audio.currentTime = 0;
-audio.load();
-audio.play().catch(() => {});
-
   const seleccion = mezclar(cartas).slice(0,3);
   const cards = document.querySelectorAll(".card");
   const texto = document.getElementById("texto");
-
   texto.innerHTML = "";
 
-  cards.forEach((c, i) => {
+  cards.forEach((c,i)=>{
     c.classList.remove("flip");
     const front = document.getElementById("c"+(i+1));
     front.style.backgroundImage = "";
-    setTimeout(() => {
+    setTimeout(()=>{
       front.style.backgroundImage = `url('img/${seleccion[i].img}')`;
       c.classList.add("flip");
       const frase = seleccion[i].textos[
-        Math.floor(Math.random() * seleccion[i].textos.length)
+        Math.floor(Math.random()*seleccion[i].textos.length)
       ];
       texto.innerHTML += `<p><strong>${seleccion[i].nombre}:</strong> ${frase}</p>`;
-    }, 600 + i * 600);
+    }, i*600);
   });
 }
 </script>
