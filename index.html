@@ -74,7 +74,12 @@ h2 {
 
 /* BLUR DE BLOQUEO */
 .blur {
-  filter: blur(9px);
+  filter: 
+    blur(12px)
+    brightness(0.85)
+    contrast(1.1);
+  transform: scale(1.02);
+  image-rendering: pixelated;
   pointer-events: none;
 }
 
