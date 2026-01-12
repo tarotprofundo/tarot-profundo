@@ -70,8 +70,6 @@ h2 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-
-  /* BLOQUEO VISUAL DEFINITIVO */
   filter: blur(16px) brightness(0.8) contrast(1.15);
   image-rendering: pixelated;
   transform: scale(1.03);
@@ -93,10 +91,11 @@ button:hover {
 }
 
 .messages {
-  max-width: 600px;
+  max-width: 700px;
   margin: 30px auto;
   font-size: 18px;
   line-height: 1.6;
+  padding: 0 20px;
 }
 
 .pay-button {
@@ -109,11 +108,6 @@ button:hover {
   font-weight: bold;
   text-decoration: none;
   border-radius: 30px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.pay-button:hover {
-  background: #e6c97d;
 }
 </style>
 </head>
@@ -121,29 +115,12 @@ button:hover {
 <body>
 
 <h1>Tarot Profundo</h1>
-<h2>Las cartas ya hablaron. Falta que las entiendas.</h2>
+<h2>Las cartas ya hablaron. Falta entenderlas.</h2>
 
 <div class="cards">
-  <div class="card">
-    <div class="card-inner">
-      <div class="card-face card-front"></div>
-      <div class="card-face card-back"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-inner">
-      <div class="card-face card-front"></div>
-      <div class="card-face card-back"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-inner">
-      <div class="card-face card-front"></div>
-      <div class="card-face card-back"></div>
-    </div>
-  </div>
+  <div class="card"><div class="card-inner"><div class="card-face card-front"></div><div class="card-face card-back"></div></div></div>
+  <div class="card"><div class="card-inner"><div class="card-face card-front"></div><div class="card-face card-back"></div></div></div>
+  <div class="card"><div class="card-inner"><div class="card-face card-front"></div><div class="card-face card-back"></div></div></div>
 </div>
 
 <button onclick="newReading()">Nueva tirada</button>
@@ -151,55 +128,69 @@ button:hover {
 <div class="messages" id="messages"></div>
 
 <a href="https://go.hotmart.com/N103824307K" target="_blank" class="pay-button">
-  🔓 Acceso completo · Lectura profunda
+🔓 Desbloquear lectura profunda
 </a>
 
 <script>
 const deck = [
-  {img:"img/loco.png"},
-  {img:"img/mago.png"},
-  {img:"img/Sacerdotisa.png"},
-  {img:"img/emperatriz.png"},
-  {img:"img/emperador.png"},
-  {img:"img/hierofante.png"},
-  {img:"img/enamorados.png"},
-  {img:"img/carro.png"},
-  {img:"img/fuerza.png"},
-  {img:"img/ermitano.png"},
-  {img:"img/rueda.png"},
-  {img:"img/justicia.png"},
-  {img:"img/colgado.png"},
-  {img:"img/muerte.png"},
-  {img:"img/templanza.png"},
-  {img:"img/diablo.png"},
-  {img:"img/torre.png"},
-  {img:"img/estrella.png"},
-  {img:"img/luna.png"},
-  {img:"img/sol.png"},
-  {img:"img/juicio.png"},
-  {img:"img/mundo.png"}
+  {
+    name: "El Loco",
+    img: "img/loco.png",
+    reading: "Esta carta aparece cuando estás más libre de lo que creés, pero también más expuesta. No habla de inconsciencia, habla de no estar atada a lo que otros esperan de vos. El problema no es el riesgo, es seguir mirando atrás buscando validación. Avanzar sin garantías también es una decisión."
+  },
+  {
+    name: "El Mago",
+    img: "img/mago.png",
+    reading: "Tenés recursos, pero no los estás usando del todo. No falta capacidad, falta decisión sostenida. Sabés qué hacer, pero estás esperando el momento ideal. El potencial está, lo que falta es orden interno y ejecución."
+  },
+  {
+    name: "La Sacerdotisa",
+    img: "img/Sacerdotisa.png",
+    reading: "Esta carta no pide acción, pide silencio interno. Algo ya lo sabés, pero no querés escucharlo porque cambia el equilibrio actual. No es espera pasiva, es no traicionarte."
+  },
+  {
+    name: "El Ermitaño",
+    img: "img/ermitano.png",
+    reading: "El afuera ya no responde. No es aislamiento, es retiro consciente. Necesitás menos opiniones y más honestidad con vos misma. Si no te escuchás ahora, avanzás desorientada."
+  },
+  {
+    name: "La Emperatriz",
+    img: "img/emperatriz.png",
+    reading: "Hay algo que quiere crecer, pero necesita espacio real. Esta carta habla de creación, pero también de límites. Dar sin medida termina agotando."
+  },
+  {
+    name: "El Emperador",
+    img: "img/emperador.png",
+    reading: "Orden, estructura y responsabilidad. Esta carta aparece cuando hace falta sostener una decisión y dejar de improvisar. El control no es rigidez, es claridad."
+  }
 ];
 
 function newReading() {
   const cards = document.querySelectorAll(".card");
   const messages = document.getElementById("messages");
 
-  messages.innerHTML = `
-    <p><em>Esta lectura está bloqueada.</em></p>
-    <p>Las cartas ya se dieron vuelta. Para entender qué están diciendo y cómo se conectan entre sí, desbloqueá la lectura completa.</p>
-  `;
-
   const shuffled = [...deck].sort(() => Math.random() - 0.5).slice(0, 3);
 
-  cards.forEach((card, i) => {
-    card.classList.remove("flip");
+  messages.innerHTML = `
+    <h3>${shuffled[0].name}</h3>
+    <p>${shuffled[0].reading}</p>
+    <p><em>La lectura completa analiza cómo se relacionan las tres cartas.</em></p>
+  `;
 
-    setTimeout(() => {
-      const back = card.querySelector(".card-back");
-      back.innerHTML = `<img src="${shuffled[i].img}" alt="Carta de tarot">`;
-      card.classList.add("flip");
-    }, i * 500);
+  cards.forEach(card => {
+    card.classList.remove("flip");
+    card.querySelector(".card-back").innerHTML = "";
   });
+
+  setTimeout(() => {
+    cards.forEach((card, i) => {
+      setTimeout(() => {
+        card.querySelector(".card-back").innerHTML =
+          `<img src="${shuffled[i].img}" alt="Carta de tarot">`;
+        card.classList.add("flip");
+      }, i * 500);
+    });
+  }, 350);
 }
 </script>
 
