@@ -132,56 +132,77 @@ button:hover {
 </a>
 
 <script>
+// ===============================
+// MODO PRUEBA
+// ===============================
+const DEV_MODE = window.location.search.includes("dev=1");
+
+// ===============================
+// MAZO
+// ===============================
 const deck = [
   {
     name: "El Loco",
     img: "img/loco.png",
-    reading: "Esta carta aparece cuando estás más libre de lo que creés, pero también más expuesta. No habla de inconsciencia, habla de no estar atada a lo que otros esperan de vos. El problema no es el riesgo, es seguir mirando atrás buscando validación. Avanzar sin garantías también es una decisión."
+    reading: "Esta carta aparece cuando estás más libre de lo que creés, pero también más expuesta. No habla de inconsciencia, habla de no estar atada a lo que otros esperan de vos. Avanzar sin garantías también es una decisión."
   },
   {
     name: "El Mago",
     img: "img/mago.png",
-    reading: "Tenés recursos, pero no los estás usando del todo. No falta capacidad, falta decisión sostenida. Sabés qué hacer, pero estás esperando el momento ideal. El potencial está, lo que falta es orden interno y ejecución."
+    reading: "Tenés recursos, pero no los estás usando del todo. No falta capacidad, falta decisión sostenida. El potencial está, pero requiere orden y acción concreta."
   },
   {
     name: "La Sacerdotisa",
     img: "img/Sacerdotisa.png",
-    reading: "Esta carta no pide acción, pide silencio interno. Algo ya lo sabés, pero no querés escucharlo porque cambia el equilibrio actual. No es espera pasiva, es no traicionarte."
+    reading: "Esta carta no pide acción. Pide silencio interno. Algo ya lo sabés, pero evitar escucharlo mantiene el equilibrio actual a costa tuya."
   },
   {
     name: "El Ermitaño",
     img: "img/ermitano.png",
-    reading: "El afuera ya no responde. No es aislamiento, es retiro consciente. Necesitás menos opiniones y más honestidad con vos misma. Si no te escuchás ahora, avanzás desorientada."
+    reading: "El afuera ya no responde. No es aislamiento, es retiro consciente. Menos opiniones, más honestidad con vos misma."
   },
   {
     name: "La Emperatriz",
     img: "img/emperatriz.png",
-    reading: "Hay algo que quiere crecer, pero necesita espacio real. Esta carta habla de creación, pero también de límites. Dar sin medida termina agotando."
+    reading: "Hay algo que quiere crecer, pero necesita espacio real. Dar sin límite termina agotando."
   },
   {
     name: "El Emperador",
     img: "img/emperador.png",
-    reading: "Orden, estructura y responsabilidad. Esta carta aparece cuando hace falta sostener una decisión y dejar de improvisar. El control no es rigidez, es claridad."
+    reading: "Orden y estructura. Esta carta marca la necesidad de sostener decisiones sin improvisar."
   }
 ];
 
+// ===============================
+// NUEVA TIRADA
+// ===============================
 function newReading() {
   const cards = document.querySelectorAll(".card");
   const messages = document.getElementById("messages");
 
   const shuffled = [...deck].sort(() => Math.random() - 0.5).slice(0, 3);
 
-  messages.innerHTML = `
-    <h3>${shuffled[0].name}</h3>
-    <p>${shuffled[0].reading}</p>
-    <p><em>La lectura completa analiza cómo se relacionan las tres cartas.</em></p>
-  `;
+  // TEXTO
+  if (DEV_MODE) {
+    messages.innerHTML = `
+      <h3>${shuffled[0].name}</h3>
+      <p>${shuffled[0].reading}</p>
+      <p><strong>[Modo prueba activo]</strong></p>
+    `;
+  } else {
+    messages.innerHTML = `
+      <p><em>Esta lectura está bloqueada.</em></p>
+      <p>Las cartas ya se dieron vuelta. Para entender qué están diciendo y cómo se relacionan, desbloqueá la lectura completa.</p>
+    `;
+  }
 
+  // VOLVER AL REVERSO
   cards.forEach(card => {
     card.classList.remove("flip");
     card.querySelector(".card-back").innerHTML = "";
   });
 
+  // ESPERA + GIRO ORDENADO
   setTimeout(() => {
     cards.forEach((card, i) => {
       setTimeout(() => {
