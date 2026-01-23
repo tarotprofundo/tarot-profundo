@@ -64,17 +64,15 @@ h2 {
 
 .card-back {
   transform: rotateY(180deg);
-  background: #1e0f2d;
 }
 
-.card-back::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: blur(22px) brightness(0.75) contrast(1.2);
-  transform: scale(1.1);
+.card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(16px) brightness(0.8) contrast(1.15);
+  image-rendering: pixelated;
+  transform: scale(1.03);
 }
 
 button {
@@ -135,20 +133,39 @@ button:hover {
 
 <script>
 const deck = [
-  { name:"El Loco", img:"img/loco.png", reading:"Esta carta aparece cuando estás más libre de lo que creés, pero también más expuesta." },
-  { name:"El Mago", img:"img/mago.png", reading:"Tenés recursos, pero no los estás usando del todo." },
-  { name:"La Sacerdotisa", img:"img/Sacerdotisa.png", reading:"Esta carta no pide acción, pide silencio interno." },
-  { name:"El Ermitaño", img:"img/ermitano.png", reading:"El afuera ya no responde. Es retiro consciente." },
-  { name:"La Emperatriz", img:"img/emperatriz.png", reading:"Hay algo que quiere crecer, pero necesita espacio." },
-  { name:"El Emperador", img:"img/emperador.png", reading:"Orden y claridad. Sostener una decisión." }
+  {
+    name: "El Loco",
+    img: "img/loco.png",
+    reading: "Esta carta aparece cuando estás más libre de lo que creés, pero también más expuesta. No habla de inconsciencia, habla de no estar atada a lo que otros esperan de vos. El problema no es el riesgo, es seguir mirando atrás buscando validación. Avanzar sin garantías también es una decisión."
+  },
+  {
+    name: "El Mago",
+    img: "img/mago.png",
+    reading: "Tenés recursos, pero no los estás usando del todo. No falta capacidad, falta decisión sostenida. Sabés qué hacer, pero estás esperando el momento ideal. El potencial está, lo que falta es orden interno y ejecución."
+  },
+  {
+    name: "La Sacerdotisa",
+    img: "img/Sacerdotisa.png",
+    reading: "Esta carta no pide acción, pide silencio interno. Algo ya lo sabés, pero no querés escucharlo porque cambia el equilibrio actual. No es espera pasiva, es no traicionarte."
+  },
+  {
+    name: "El Ermitaño",
+    img: "img/ermitano.png",
+    reading: "El afuera ya no responde. No es aislamiento, es retiro consciente. Necesitás menos opiniones y más honestidad con vos misma. Si no te escuchás ahora, avanzás desorientada."
+  },
+  {
+    name: "La Emperatriz",
+    img: "img/emperatriz.png",
+    reading: "Hay algo que quiere crecer, pero necesita espacio real. Esta carta habla de creación, pero también de límites. Dar sin medida termina agotando."
+  },
+  {
+    name: "El Emperador",
+    img: "img/emperador.png",
+    reading: "Orden, estructura y responsabilidad. Esta carta aparece cuando hace falta sostener una decisión y dejar de improvisar. El control no es rigidez, es claridad."
+  }
 ];
 
-let locked = false;
-
 function newReading() {
-  if (locked) return;
-  locked = true;
-
   const cards = document.querySelectorAll(".card");
   const messages = document.getElementById("messages");
 
@@ -162,20 +179,18 @@ function newReading() {
 
   cards.forEach(card => {
     card.classList.remove("flip");
-    card.querySelector(".card-back").style.setProperty("--img", "");
-    card.querySelector(".card-back").style.backgroundImage = "";
+    card.querySelector(".card-back").innerHTML = "";
   });
 
   setTimeout(() => {
     cards.forEach((card, i) => {
       setTimeout(() => {
-        card.querySelector(".card-back").style.backgroundImage =
-          `url('${shuffled[i].img}')`;
+        card.querySelector(".card-back").innerHTML =
+          `<img src="${shuffled[i].img}" alt="Carta de tarot">`;
         card.classList.add("flip");
-        if (i === 2) locked = false;
       }, i * 500);
     });
-  }, 400);
+  }, 350);
 }
 </script>
 
